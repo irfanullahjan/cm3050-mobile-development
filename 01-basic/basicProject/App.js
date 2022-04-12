@@ -26,29 +26,7 @@ export default function App() {
     "Ugli fruit",
     "Watermelon",
   ];
-  const [list, setList] = useState([
-    "Apple",
-    "Banana",
-    "Cherry",
-    "Durian",
-    "Elderberry",
-    "Fig",
-    "Grape",
-    "Honeydew",
-    "Jackfruit",
-    "Kiwifruit",
-    "Lemon",
-    "Mango",
-    "Nectarine",
-    "Orange",
-    "Papaya",
-    "Quince",
-    "Raspberry",
-    "Strawberry",
-    "Tangerine",
-    "Ugli fruit",
-    "Watermelon",
-  ]);
+  const [list, setList] = useState(originalState);
   return (
     <View style={styles.container}>
       {list.map((fruit, index) => (
