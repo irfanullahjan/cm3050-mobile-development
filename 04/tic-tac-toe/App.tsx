@@ -1,10 +1,18 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function App() {
-  const grid: null[][] = Array(3).fill(Array(3).fill(null));
+  type Square = "X" | "O" | null;
+  const emptyGrid: Square[][] = Array(3).fill(Array(3).fill(null));
+  const [nextPlayer, setNextPlayer] = useState<Square>(
+    Math.random() < 0.5 ? "X" : "O"
+  );
+  const [grid, setGrid] = useState<Square[][]>(emptyGrid);
+
   return (
     <View style={styles.container}>
+      <Text>Player: {nextPlayer}</Text>
       <View style={styles.box}>
         <View
           style={{
@@ -25,16 +33,46 @@ export default function App() {
                 borderTopWidth: rowIndex !== 0 ? 2 : 0,
               }}
             >
-              {row.map((col, colIndex) => (
+              {row.map((square, colIndex) => (
                 <View
                   key={colIndex}
                   style={{ flex: 1, borderLeftWidth: colIndex !== 0 ? 2 : 0 }}
-                ></View>
+                >
+                  <TouchableOpacity
+                    style={{ width: "100%", height: "100%", display: "flex" }}
+                    onPress={() => {
+                      console.log(rowIndex, colIndex);
+                      if (square === null) {
+                        const newGrid = [...grid];
+                        const newRow = [...newGrid[rowIndex]];
+                        newRow[colIndex] = nextPlayer;
+                        newGrid[rowIndex] = newRow;
+                        setGrid(newGrid);
+                        setNextPlayer(nextPlayer === "X" ? "O" : "X");
+                      }
+                    }}
+                  >
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        justifyContent: "center",
+                        height: "100%",
+                        display: "flex",
+                        margin: 0,
+                        padding: 0,
+                        fontSize: 50,
+                      }}
+                    >
+                      {square}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               ))}
             </View>
           ))}
         </View>
       </View>
+      <Button onPress={() => setGrid(emptyGrid)} title="Reset" />
       <StatusBar style="auto" />
     </View>
   );
