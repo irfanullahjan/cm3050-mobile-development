@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
 import {
-  Button,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -17,20 +17,77 @@ export default function App() {
     ["0", ".", "="],
   ];
 
+  const [display, setDisplay] = useState("0");
+  const [operation, setOperation] = useState("");
+  const [previousValue, setPreviousValue] = useState("");
+
+  const handleButtonPress = (button) => {
+    if (button === "C") {
+      setDisplay("0");
+      setOperation("");
+      setPreviousValue("");
+    } else if (button === "=") {
+      const result = calculate();
+      setDisplay(result);
+      setOperation("");
+      setPreviousValue(result);
+    } else if (button === "+-") {
+      setDisplay(display * -1);
+    } else if (["+", "-", "X", "/", "%"].includes(button)) {
+      setOperation(button);
+      setPreviousValue(display);
+      setDisplay("");
+    } else if (button === ".") {
+      if (!display.includes(".")) {
+        setDisplay(display + ".");
+      }
+    } else {
+      if (display === "0") {
+        setDisplay(button);
+      } else {
+        setDisplay(display + button);
+      }
+    }
+  };
+
+  const calculate = () => {
+    if (operation === "X") {
+      return parseFloat(previousValue) * parseFloat(display);
+    } else if (operation === "/") {
+      return parseFloat(previousValue) / parseFloat(display);
+    } else if (operation === "-") {
+      return parseFloat(previousValue) - parseFloat(display);
+    } else if (operation === "+") {
+      return parseFloat(previousValue) + parseFloat(display);
+    } else if (operation === "%") {
+      return parseFloat(previousValue) % parseFloat(display);
+    } else {
+      return parseFloat(display);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <SafeAreaView style={{flex: 1}}>
-        <View style={{flex: 1}}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
           <View style={styles.display}>
-            <Text style={styles.displayText}>1234</Text>
+            <Text style={styles.displayText}>{display}</Text>
           </View>
           <View style={styles.buttons}>
             {buttons.map((buttonsRow, rowIndex) => (
               <View style={styles.buttonsRow} key={rowIndex}>
                 {buttonsRow.map((buttonText) => (
-                  <TouchableOpacity style={styles.buttonCol} key={buttonText}>
+                  <TouchableOpacity
+                    key={buttonText}
+                    style={
+                      buttonText != 0
+                        ? styles.buttonCol
+                        : [styles.buttonCol, styles.buttonColWide]
+                    }
+                    onPress={() => handleButtonPress(buttonText)}
+                  >
                     <View style={styles.button}>
-                      <Text style={{fontSize: 20}}>{buttonText}</Text>
+                      <Text style={{ fontSize: 20 }}>{buttonText}</Text>
                     </View>
                   </TouchableOpacity>
                 ))}
@@ -46,9 +103,10 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
+    maxWidth: 500,
     flex: 1,
     backgroundColor: "black",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   display: {
     flexGrow: 1,
@@ -58,19 +116,22 @@ const styles = StyleSheet.create({
     padding: 30,
     textAlign: "right",
     fontSize: 60,
-    color: "white"
+    color: "white",
   },
   buttons: {
     padding: 10,
   },
   buttonsRow: {
-    display: "flex",
     flexDirection: "row",
   },
   buttonCol: {
-    width: "25%",
+    flex: 1,
     aspectRatio: 1,
     padding: 10,
+  },
+  buttonColWide: {
+    flexGrow: 2,
+    aspectRatio: 2,
   },
   button: {
     borderRadius: "100%",
