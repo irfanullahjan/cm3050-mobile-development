@@ -3,18 +3,13 @@ import { useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function App() {
-  type Square = "X" | "O" | null;
-  const emptyGrid: Square[][] = Array(3).fill(Array(3).fill(null));
+  const emptyGrid = Array(3).fill(Array(3).fill(null));
   const getRandomNextPlayer = () => (Math.random() < 0.5 ? "X" : "O");
-  const getAlternatePlayer = (player: Square) => (player === "X" ? "O" : "X");
-  const [nextPlayer, setNextPlayer] = useState<Square>(getRandomNextPlayer());
-  const [grid, setGrid] = useState<Square[][]>(emptyGrid);
+  const getAlternatePlayer = (player) => (player === "X" ? "O" : "X");
+  const [nextPlayer, setNextPlayer] = useState(getRandomNextPlayer());
+  const [grid, setGrid] = useState(emptyGrid);
 
-  const handleClickSquare = (
-    square: Square,
-    rowIndex: number,
-    colIndex: number
-  ) => {
+  const handleClickSquare = (square, rowIndex, colIndex) => {
     if (square === null) {
       const newGrid = grid.map((row) => [...row]); // deep copy
       newGrid[rowIndex][colIndex] = nextPlayer;
