@@ -10,11 +10,31 @@ import {
 
 export default function App() {
   const buttons = [
-    ["C", "+-", "%", "/"],
-    ["7", "8", "9", "X"],
-    ["4", "5", "6", "-"],
-    ["1", "2", "3", "+"],
-    ["0", ".", "="],
+    [
+      { text: "C", intent: "secondary" },
+      { text: "+-", intent: "secondary" },
+      { text: "%", intent: "secondary" },
+      { text: "÷", intent: "primary" },
+    ],
+    [
+      { text: "7" },
+      { text: "8" },
+      { text: "9" },
+      { text: "×", intent: "primary" },
+    ],
+    [
+      { text: "4" },
+      { text: "5" },
+      { text: "6" },
+      { text: "−", intent: "primary" },
+    ],
+    [
+      { text: "1" },
+      { text: "2" },
+      { text: "3" },
+      { text: "+", intent: "primary" },
+    ],
+    [{ text: "0", span: 2 }, { text: "." }, { text: "=", intent: "primary" }],
   ];
 
   const [display, setDisplay] = useState("0");
@@ -33,7 +53,7 @@ export default function App() {
       setPreviousValue(result);
     } else if (button === "+-") {
       setDisplay(display * -1);
-    } else if (["+", "-", "X", "/", "%"].includes(button)) {
+    } else if (["+", "−", "×", "÷", "%"].includes(button)) {
       setOperation(button);
       setPreviousValue(display);
       setDisplay("");
@@ -51,11 +71,11 @@ export default function App() {
   };
 
   const calculate = () => {
-    if (operation === "X") {
+    if (operation === "×") {
       return parseFloat(previousValue) * parseFloat(display);
-    } else if (operation === "/") {
+    } else if (operation === "÷") {
       return parseFloat(previousValue) / parseFloat(display);
-    } else if (operation === "-") {
+    } else if (operation === "−") {
       return parseFloat(previousValue) - parseFloat(display);
     } else if (operation === "+") {
       return parseFloat(previousValue) + parseFloat(display);
@@ -73,23 +93,41 @@ export default function App() {
           <View style={styles.display}>
             <Text style={styles.displayText}>{display}</Text>
           </View>
-          <View style={styles.buttons}>
+          <View style={styles.keypad}>
             {buttons.map((buttonsRow, rowIndex) => (
-              <View style={styles.buttonsRow} key={rowIndex}>
-                {buttonsRow.map((buttonText) => (
-                  <TouchableOpacity
-                    key={buttonText}
-                    style={
-                      buttonText != 0
-                        ? styles.buttonCol
-                        : [styles.buttonCol, styles.buttonColWide]
-                    }
-                    onPress={() => handleButtonPress(buttonText)}
+              <View style={styles.keypadRow} key={rowIndex}>
+                {buttonsRow.map((buttonObj) => (
+                  <View
+                    key={buttonObj.text}
+                    style={[
+                      styles.keypadCol,
+                      buttonObj.span === 2 ? styles.keypadColSpan2 : null,
+                    ]}
                   >
-                    <View style={styles.button}>
-                      <Text style={{ fontSize: 20 }}>{buttonText}</Text>
+                    <View style={styles.buttonPadding}>
+                      <TouchableOpacity
+                        onPress={() => handleButtonPress(buttonObj.text)}
+                        style={[
+                          styles.button,
+                          buttonObj.intent === "primary"
+                            ? styles.buttonPrimary
+                            : null,
+                          buttonObj.intent === "secondary"
+                            ? styles.buttonSecondary
+                            : null,
+                        ]}
+                      >
+                        <Text
+                          style={[
+                            styles.buttonText,
+                            buttonObj.intent ? null : styles.buttonTextDark,
+                          ]}
+                        >
+                          {buttonObj.text}
+                        </Text>
+                      </TouchableOpacity>
                     </View>
-                  </TouchableOpacity>
+                  </View>
                 ))}
               </View>
             ))}
@@ -118,28 +156,40 @@ const styles = StyleSheet.create({
     fontSize: 60,
     color: "white",
   },
-  buttons: {
-    padding: 10,
-  },
-  buttonsRow: {
+  keypad: {},
+  keypadRow: {
     flexDirection: "row",
   },
-  buttonCol: {
+  keypadCol: {
     flex: 1,
     aspectRatio: 1,
-    padding: 10,
   },
-  buttonColWide: {
+  keypadColSpan2: {
     flexGrow: 2,
     aspectRatio: 2,
   },
+  buttonPadding: {
+    padding: 10,
+    height: "100%",
+  },
   button: {
-    borderRadius: "100%",
-    textAlign: "center",
+    borderRadius: "100000px",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "gray",
-    width: "100%",
+    backgroundColor: "#222",
     height: "100%",
+  },
+  buttonPrimary: {
+    backgroundColor: "#1589FF",
+  },
+  buttonSecondary: {
+    backgroundColor: "gray",
+  },
+  buttonText: {
+    fontSize: 20,
+    color: "black",
+  },
+  buttonTextDark: {
+    color: "white",
   },
 });
