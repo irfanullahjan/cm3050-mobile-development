@@ -50,7 +50,13 @@ export default function App() {
       setOperation("");
       setPreviousValue("");
     } else if (button === "=") {
-      setHistory(`${previousValue} ${operation} ${display}`);
+      if (operation && previousValue) {
+        setHistory(`${previousValue} ${operation} ${display}`);
+      } else if (display > 0) {
+        setHistory(display);
+      } else {
+        setHistory("");
+      }
       const result = calculate();
       setDisplay(result);
       setOperation("");
@@ -68,10 +74,11 @@ export default function App() {
         setDisplay(display + ".");
       }
     } else {
+      const evalString = history.replace("−", "-").replace("×", "*").replace("÷", "/");
       if (
         operations.includes(display) ||
         display == 0 ||
-        eval(history) == display
+        eval(evalString) == display
       ) {
         setDisplay(button);
       } else {
