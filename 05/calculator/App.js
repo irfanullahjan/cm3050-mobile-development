@@ -12,7 +12,7 @@ export default function App() {
   const buttons = [
     [
       { text: "C", intent: "secondary" },
-      { text: "+-", intent: "secondary" },
+      { text: "±", intent: "secondary" },
       { text: "%", intent: "secondary" },
       { text: "÷", intent: "primary" },
     ],
@@ -40,6 +40,9 @@ export default function App() {
   const [display, setDisplay] = useState("0");
   const [operation, setOperation] = useState("");
   const [previousValue, setPreviousValue] = useState("");
+  const [history, setHistory] = useState("");
+
+  const operations = ["+", "−", "×", "÷"];
 
   const handleButtonPress = (button) => {
     if (button === "C") {
@@ -47,22 +50,29 @@ export default function App() {
       setOperation("");
       setPreviousValue("");
     } else if (button === "=") {
+      setHistory(`${previousValue} ${operation} ${display}`);
       const result = calculate();
       setDisplay(result);
       setOperation("");
       setPreviousValue(result);
-    } else if (button === "+-") {
+    } else if (button === "±") {
       setDisplay(display * -1);
-    } else if (["+", "−", "×", "÷", "%"].includes(button)) {
+    } else if (button === "%") {
+      setDisplay(display / 100);
+    } else if (operations.includes(button)) {
       setOperation(button);
       setPreviousValue(display);
-      setDisplay("");
+      setDisplay(button);
     } else if (button === ".") {
       if (!display.includes(".")) {
         setDisplay(display + ".");
       }
     } else {
-      if (display === "0") {
+      if (
+        operations.includes(display) ||
+        display == 0 ||
+        eval(history) == display
+      ) {
         setDisplay(button);
       } else {
         setDisplay(display + button);
@@ -91,6 +101,7 @@ export default function App() {
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
           <View style={styles.display}>
+            <Text style={styles.displayText}>{history}</Text>
             <Text style={styles.displayText}>{display}</Text>
           </View>
           <View style={styles.keypad}>
@@ -147,16 +158,18 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   display: {
-    flexGrow: 1,
     fontSize: 40,
   },
   displayText: {
-    padding: 30,
+    paddingLeft: 10,
+    paddingRight: 10,
     textAlign: "right",
     fontSize: 60,
     color: "white",
   },
-  keypad: {},
+  keypad: {
+    flex: 1,
+  },
   keypadRow: {
     flexDirection: "row",
   },
@@ -186,7 +199,7 @@ const styles = StyleSheet.create({
     backgroundColor: "gray",
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 30,
     color: "black",
   },
   buttonTextDark: {
