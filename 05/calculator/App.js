@@ -44,6 +44,11 @@ export default function App() {
 
   const operations = ["+", "−", "×", "÷"];
 
+  const getEvaluateableHistory = () =>
+    history
+      ? history.replace("−", "-").replace("×", "*").replace("÷", "/")
+      : "";
+
   const handleButtonPress = (button) => {
     if (button === "C") {
       setDisplay("0");
@@ -52,10 +57,6 @@ export default function App() {
     } else if (button === "=") {
       if (operation && previousValue) {
         setHistory(`${previousValue} ${operation} ${display}`);
-      } else if (display > 0) {
-        setHistory(display);
-      } else {
-        setHistory("");
       }
       const result = calculate();
       setDisplay(result);
@@ -70,14 +71,17 @@ export default function App() {
       setPreviousValue(display);
       setDisplay(button);
     } else if (button === ".") {
-      if (!display.includes(".")) {
-        setDisplay(display + ".");
+      const evalString = getEvaluateableHistory();
+      if (eval(evalString) == display || operations.includes(display)) {
+        setDisplay("0.");
+      } else if (!/\./.test(display) || display === "0") {
+        setDisplay(`${display}.`);
       }
     } else {
-      const evalString = history.replace("−", "-").replace("×", "*").replace("÷", "/");
+      const evalString = getEvaluateableHistory();
       if (
         operations.includes(display) ||
-        display == 0 ||
+        display === "0" ||
         eval(evalString) == display
       ) {
         setDisplay(button);
