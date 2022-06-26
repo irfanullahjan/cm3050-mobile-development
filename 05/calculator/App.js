@@ -46,7 +46,7 @@ export default function App() {
   const operations = ["+", "−", "×", "÷"];
 
   const handleButtonPress = (button) => {
-    if (parseInt(button) >= 0) {
+    if (parseInt(button) >= 0 || button === ".") {
       handleNumberInput(button);
     } else if (operations.includes(button)) {
       setMemoryValue(operatorValue === 0 ? answerValue : calculateEquals());
