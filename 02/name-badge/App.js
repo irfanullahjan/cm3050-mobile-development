@@ -6,12 +6,16 @@ import { useEffect, useState } from "react";
 export default function App() {
   lockAsync(OrientationLock.LANDSCAPE_LEFT);
 
-  const [randomColor, setRandomColor] = useState("#FFFFFF");
+  const [randomColor, setRandomColor] = useState("rgb(255, 255, 255)");
 
   useEffect(() => {
-    setInterval(() => {
-      setRandomColor(`#${Math.floor(Math.random() * 16777215).toString(16)}`);
+    const interval = setInterval(() => {
+      let randomRed = Math.floor(Math.random() * 256);
+      let randomGreen = Math.floor(Math.random() * 256);
+      let randomBlue = Math.floor(Math.random() * 256);
+      setRandomColor(`rgb(${randomRed}, ${randomGreen}, ${randomBlue})`);
     }, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -40,7 +44,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
     textAlign: "center",
-    textShadow: "3px 3px 8px black",
+    textShadowColor: "black",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 5,
   },
   subtitleText: {
     fontSize: 30,
@@ -49,19 +55,23 @@ const styles = StyleSheet.create({
     color: "white",
     marginBottom: 20,
     textAlign: "center",
-    textShadow: "2px 2px 5px black",
+    textShadowColor: "black",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   badge: {
     width: "90%",
-    height: "40%",
     backgroundColor: "white",
     borderRadius: 5,
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
+    padding: 20,
     alignItems: "center",
-    boxShadow: "10px 10px 50px #000",
-    borderRadius: "100000px",
+    shadowColor: "black",
+    shadowOffset: { width: 10, height: 10 },
+    shadowRadius: 30,
+    shadowOpacity: 0.8,
   },
   badgeText: {
     fontSize: 60,
@@ -71,7 +81,8 @@ const styles = StyleSheet.create({
   badgeImage: {
     width: "20%",
     aspectRatio: 1,
-    borderRadius: "100%",
-    border: "4px double black",
+    borderRadius: 10000,
+    borderWidth: 1,
+    borderColor: "black",
   },
 });
