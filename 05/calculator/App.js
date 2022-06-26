@@ -114,6 +114,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <SafeAreaView style={{ flex: 1 }}>
+        <StatusBar style="auto" />
         <View style={{ flex: 1 }}>
           <View style={styles.display}>
             <Text style={styles.displayText}>{answerValue}</Text>
