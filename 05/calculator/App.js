@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,9 +9,9 @@ import {
 } from "react-native";
 
 export default function App() {
-  const buttons = [
+  const buttonsDefault = [
     [
-      { text: "C", intent: "secondary" },
+      { text: "AC", intent: "secondary" },
       { text: "±", intent: "secondary" },
       { text: "%", intent: "secondary" },
       { text: "÷", intent: "primary" },
@@ -37,83 +37,86 @@ export default function App() {
     [{ text: "0", span: 2 }, { text: "." }, { text: "=", intent: "primary" }],
   ];
 
-  const [display, setDisplay] = useState("0");
-  const [operation, setOperation] = useState("");
-  const [previousValue, setPreviousValue] = useState("");
-  const [history, setHistory] = useState("");
+  const [buttons, setButtons] = useState(buttonsDefault);
+  const [answerValue, setAnswerValue] = useState(0);
+  const [memoryValue, setMemoryValue] = useState(0);
+  const [operatorValue, setOperatorValue] = useState(0);
+  const [readyToReplace, setReadyToReplace] = useState(true);
 
   const operations = ["+", "−", "×", "÷"];
 
-  const getEvaluateableHistory = () =>
-    history
-      ? history.replace("−", "-").replace("×", "*").replace("÷", "/")
-      : "";
-
   const handleButtonPress = (button) => {
-    if (button === "C") {
-      setDisplay("0");
-      setOperation("");
-      setPreviousValue("");
-    } else if (button === "=") {
-      if (operation && previousValue) {
-        setHistory(`${previousValue} ${operation} ${display}`);
-      }
-      const result = calculate();
-      setDisplay(result);
-      setOperation("");
-      setPreviousValue(result);
-    } else if (button === "±") {
-      setDisplay(display * -1);
-    } else if (button === "%") {
-      setDisplay(display / 100);
+    if (parseInt(button) >= 0) {
+      handleNumberInput(button);
     } else if (operations.includes(button)) {
-      setOperation(button);
-      setPreviousValue(display);
-      setDisplay(button);
-    } else if (button === ".") {
-      const evalString = getEvaluateableHistory();
-      if (eval(evalString) == display || operations.includes(display)) {
-        setDisplay("0.");
-      } else if (!/\./.test(display) || display === "0") {
-        setDisplay(`${display}.`);
-      }
-    } else {
-      const evalString = getEvaluateableHistory();
-      if (
-        operations.includes(display) ||
-        display === "0" ||
-        eval(evalString) == display
-      ) {
-        setDisplay(button);
-      } else {
-        setDisplay(display + button);
-      }
+      setMemoryValue(operatorValue === 0 ? answerValue : calculateEquals());
+      setOperatorValue(button);
+      setReadyToReplace(true);
+    } else if (button === "=") {
+      calculateEquals();
+      setMemoryValue(0);
+      setReadyToReplace(true);
+    } else if (button === "±") {
+      setAnswerValue(answerValue * -1);
+    } else if (button === "%") {
+      setAnswerValue(answerValue / 100);
+    } else if (button === "AC") {
+      setAnswerValue(0);
+      setMemoryValue(0);
+      setOperatorValue(0);
+      setReadyToReplace(true);
+    } else if (button === "C") {
+      setAnswerValue(0);
+      setReadyToReplace(true);
     }
-  };
+  }
 
-  const calculate = () => {
-    if (operation === "×") {
-      return parseFloat(previousValue) * parseFloat(display);
-    } else if (operation === "÷") {
-      return parseFloat(previousValue) / parseFloat(display);
-    } else if (operation === "−") {
-      return parseFloat(previousValue) - parseFloat(display);
-    } else if (operation === "+") {
-      return parseFloat(previousValue) + parseFloat(display);
-    } else if (operation === "%") {
-      return parseFloat(previousValue) % parseFloat(display);
+  const handleNumberInput = (number) => {
+    if (readyToReplace || parseInt(answerValue) === 0) {
+      setAnswerValue(number);
+      setReadyToReplace(false);
     } else {
-      return parseFloat(display);
+      setAnswerValue(answerValue + number);
     }
-  };
+  }
+
+  const calculateEquals = () => {
+    const current = parseFloat(answerValue);
+    const previous = parseFloat(memoryValue);
+    let result = 0;
+    switch (operatorValue) {
+      case "+":
+        result = previous + current; break;
+      case "−":
+        result = previous - current; break;
+      case "×":
+        result = previous * current; break;
+      case "÷":
+        result = previous / current; break;
+      default:
+        break;
+    }
+    setAnswerValue(result);
+    return result;
+  }
+
+  // Convert C to AC and vice versa
+  useEffect(() => {
+    let newButtons = [...buttons];
+    if (answerValue === 0) {
+      newButtons[0][0].text = "AC";
+    } else {
+      newButtons[0][0].text = "C";
+    }
+    setButtons(newButtons);
+  }, [answerValue]);
 
   return (
     <View style={styles.container}>
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
           <View style={styles.display}>
-            <Text style={styles.displayText}>{history}</Text>
-            <Text style={styles.displayText}>{display}</Text>
+            <Text style={styles.displayText}>{answerValue}</Text>
           </View>
           <View style={styles.keypad}>
             {buttons.map((buttonsRow, rowIndex) => (
@@ -169,17 +172,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   display: {
-    fontSize: 40,
+    flex: 1,
   },
   displayText: {
     paddingLeft: 10,
     paddingRight: 10,
     textAlign: "right",
-    fontSize: 60,
+    fontSize: 70,
     color: "white",
   },
   keypad: {
-    flex: 1,
   },
   keypadRow: {
     flexDirection: "row",
@@ -210,7 +212,7 @@ const styles = StyleSheet.create({
     backgroundColor: "gray",
   },
   buttonText: {
-    fontSize: 30,
+    fontSize: 40,
     color: "black",
   },
   buttonTextDark: {
