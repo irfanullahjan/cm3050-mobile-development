@@ -100,7 +100,7 @@ export default function App() {
     return result;
   }
 
-  // Convert C to AC and vice versa
+  // Convert AC to C and vice versa
   useEffect(() => {
     let newButtons = [...buttons];
     if (answerValue === 0) {
