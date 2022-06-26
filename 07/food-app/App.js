@@ -15,7 +15,7 @@ export default function App() {
     <View style={styles.container}>
       <SafeAreaView>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Menu">
+          <Stack.Navigator initialRouteName="Restaurants">
             <Stack.Screen name="Restaurants" component={Restaurants} />
             <Stack.Screen name="Menu" component={Menu} />
           </Stack.Navigator>

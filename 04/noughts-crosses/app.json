@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "tic-tac-toe",
-    "slug": "tic-tac-toe",
+    "name": "noughts-crosses",
+    "slug": "noughts-crosses",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

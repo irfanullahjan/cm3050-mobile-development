@@ -1,4 +1,4 @@
-import { StatusBar } from "expo-status-bar";
+import { StatusBar } from "react-native";
 import { useEffect, useState } from "react";
 import {
   SafeAreaView,
@@ -113,6 +113,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="light-content" />
       <SafeAreaView style={{ flex: 1 }}>
         <StatusBar style="auto" />
         <View style={{ flex: 1 }}>
@@ -159,7 +160,6 @@ export default function App() {
             ))}
           </View>
         </View>
-        <StatusBar style="auto" />
       </SafeAreaView>
     </View>
   );

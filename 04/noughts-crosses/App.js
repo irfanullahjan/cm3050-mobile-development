@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Button, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function App() {
   const emptyGrid = Array(3).fill(Array(3).fill(null));
@@ -24,7 +24,7 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.nextPlayer}>Next</Text>
       <Text style={styles.nextPlayerSymbol}>{nextPlayer}</Text>
       <View style={styles.box}>
@@ -58,7 +58,7 @@ export default function App() {
       </View>
       <Button onPress={handleReset} title="Reset" />
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
