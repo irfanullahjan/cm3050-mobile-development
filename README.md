@@ -1,13 +1,5 @@
 # Mobile Development
 
-## Expo links
-
-1. 
-2. [Noughts and Crosses](https://snack.expo.dev/@irfanjan/noughts-crosses)
-3. [Calculator](https://snack.expo.dev/@irfanjan/calculator)
-4. [Food App](https://snack.expo.dev/@irfanjan/food-app)
-
-
 ### Name Badge
 
 Expo Snack: [https://snack.expo.dev/@irfanjan/name-badge](https://snack.expo.dev/@irfanjan/name-badge)
