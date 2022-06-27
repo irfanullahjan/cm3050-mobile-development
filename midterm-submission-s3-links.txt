@@ -1,0 +1,5 @@
+https://coursera-assessments.s3.amazonaws.com/assessments/1656322621039/1b6466d4-131e-4b66-bc1b-c863950e852b/01-name-badge.zip
+https://coursera-assessments.s3.amazonaws.com/assessments/1656322632266/f8389c12-b3c5-4c4d-b5f4-deca1fa2a8fe/02-wireframes-and-user-flow.zip
+https://coursera-assessments.s3.amazonaws.com/assessments/1656322646380/23e150b3-a31e-428b-e508-b477bf4ea40f/03-noughts-and-crosses.zip
+https://coursera-assessments.s3.amazonaws.com/assessments/1656322654185/ec7f79ba-591e-40c2-9f9c-f4a944c591d6/04-calculator.zip
+https://coursera-assessments.s3.amazonaws.com/assessments/1656322663172/d27754bd-d2df-472e-c988-29e55d57f864/05-food-app.zip
