@@ -1,6 +1,7 @@
 import { FormikProvider, useFormik } from "formik";
 import { Button, View } from "react-native";
 import { TextInputFormik } from "../components/TextInput";
+import { auth } from "../firebase";
 
 export function SignUp({ navigation }) {
   const formik = useFormik({
@@ -10,7 +11,14 @@ export function SignUp({ navigation }) {
       confirmPassword: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      auth
+        .createUserWithEmailAndPassword(values.email, values.password)
+        .then(() => {
+          navigation.navigate("Home");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
     validate: (values) => {
       console.log("validate", values);
