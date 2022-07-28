@@ -1,14 +1,34 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button, Text, View } from "react-native";
 import { auth, firestore } from "../firebase";
 
-export function Home() {
+export function Home({ navigation }) {
+  const [userCollection, setUserCollection] = useState(null);
+  const [userTransactions, setUserTransactions] = useState([]);
+
   useEffect(() => {
-    const books = firestore
-      .collection("books")
-      .where("uid", "==", auth.currentUser.uid)
-      .get();
-    console.log(books);
+    firestore
+      .collection("users")
+      .doc(auth.currentUser.uid)
+      .get()
+      .then((doc) => {
+        setUserCollection(doc.data());
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
+  useEffect(() => {
+    firestore
+      .collection("users")
+      .doc(auth.currentUser.uid)
+      .collection("transactions")
+      .get()
+      .then((snapshot) => {
+        setUserTransactions(
+          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        );
+      })
+      .catch((error) => console.error(error));
   }, []);
 
   if (!auth.currentUser) {
@@ -22,7 +42,13 @@ export function Home() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>My Wallets</Text>
-      <Text>Work</Text>
+      {userTransactions.map((transaction) => (
+        <Text key={transaction.id}>{transaction.description}</Text>
+      ))}
+      <Button
+        title="Add Transaction"
+        onPress={() => navigation.navigate("Transaction")}
+      />
     </View>
   );
 }

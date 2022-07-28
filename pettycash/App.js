@@ -6,6 +6,7 @@ import { Home } from "./screens/Home";
 import { SignUp } from "./screens/Signup";
 import { Login } from "./screens/Login";
 import { auth } from "./firebase";
+import { Transaction } from "./screens/Transaction";
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -22,6 +23,7 @@ export default function App() {
               </>
             )}
             <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Transaction" component={Transaction} />
           </Stack.Navigator>
         </NavigationContainer>
         <StatusBar style="auto" />
