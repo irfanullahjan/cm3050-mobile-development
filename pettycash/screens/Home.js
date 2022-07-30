@@ -1,35 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { Button, Text, View } from "react-native";
+import { AppContext } from "../App";
 import { auth, firestore } from "../firebase";
 
 export function Home({ navigation }) {
-  const [userCollection, setUserCollection] = useState(null);
-  const [userTransactions, setUserTransactions] = useState([]);
-
-  useEffect(() => {
-    firestore
-      .collection("users")
-      .doc(auth.currentUser.uid)
-      .get()
-      .then((doc) => {
-        setUserCollection(doc.data());
-      })
-      .catch((error) => console.error(error));
-  }, []);
-
-  useEffect(() => {
-    firestore
-      .collection("users")
-      .doc(auth.currentUser.uid)
-      .collection("transactions")
-      .get()
-      .then((snapshot) => {
-        setUserTransactions(
-          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-        );
-      })
-      .catch((error) => console.error(error));
-  }, []);
+  const { userTransactions } = useContext(AppContext);
 
   if (!auth.currentUser) {
     return (
@@ -39,11 +14,32 @@ export function Home({ navigation }) {
     );
   }
 
+  const deleteTransaction = (id) => {
+    firestore
+      .collection("users")
+      .doc(auth.currentUser.uid)
+      .collection("transactions")
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("Document successfully deleted!");
+      })
+      .catch((error) => {
+        console.error("Error removing document: ", error);
+      });
+  };
+
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>My Wallets</Text>
       {userTransactions.map((transaction) => (
-        <Text key={transaction.id}>{transaction.description}</Text>
+        <>
+          <Text key={transaction.id}>{transaction.description}</Text>
+          <Button
+            onPress={() => deleteTransaction(transaction.id)}
+            title="Delete"
+          />
+        </>
       ))}
       <Button
         title="Add Transaction"

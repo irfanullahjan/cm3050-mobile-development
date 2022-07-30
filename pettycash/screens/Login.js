@@ -1,9 +1,12 @@
 import { FormikProvider, useFormik } from "formik";
+import { useContext } from "react";
 import { Button, View } from "react-native";
+import { AppContext } from "../App";
 import { TextInputFormik } from "../components/TextInput";
 import { auth } from "../firebase";
 
 export function Login({ navigation }) {
+  const { setUser } = useContext(AppContext);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -13,7 +16,7 @@ export function Login({ navigation }) {
       auth
         .signInWithEmailAndPassword(values.email, values.password)
         .then(() => {
-          navigation.navigate("Home");
+          setUser(auth.currentUser);
         })
         .catch((error) => {
           console.error(error);
