@@ -5,7 +5,7 @@ export const AppContext = createContext({});
 
 export function AppContextProvider(props) {
   const [user, setUser] = useState(null);
-  const [userTransactions, setUserTransactions] = useState([]);
+  const [userTransactions, setUserTransactions] = useState(null);
 
   useEffect(() => {
     if (user) {

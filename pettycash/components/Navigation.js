@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { Home } from "../screens/Home";
+import { Wallet } from "../screens/Wallet";
 import { SignUp } from "../screens/Signup";
 import { Login } from "../screens/Login";
 import { Transaction } from "../screens/Transaction";
@@ -15,7 +15,7 @@ export function Navigation() {
       <Stack.Navigator>
         {user ? (
           <>
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Wallet" component={Wallet} />
             <Stack.Screen name="Transaction" component={Transaction} />
           </>
         ) : (

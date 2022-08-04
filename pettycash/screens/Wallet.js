@@ -1,13 +1,19 @@
 import { useContext } from "react";
-import { Button, ScrollView, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Button,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import { Cell, Section, TableView } from "react-native-tableview-simple";
 import { AppContext } from "../contexts/AppContext";
-import { firestore } from "../firebase";
+import { auth } from "../firebase";
 
-export function Home({ navigation }) {
-  const { user, userTransactions } = useContext(AppContext);
+export function Wallet({ navigation }) {
+  const { userTransactions } = useContext(AppContext);
 
-  if (!user) {
+  if (!auth.currentUser) {
     return (
       <View>
         <Text>No user logged in</Text>
@@ -15,28 +21,16 @@ export function Home({ navigation }) {
     );
   }
 
-  const deleteTransaction = (id) => {
-    firestore
-      .collection("users")
-      .doc(user.uid)
-      .collection("transactions")
-      .doc(id)
-      .delete()
-      .then(() => {
-        console.log("Document successfully deleted!");
-      })
-      .catch((error) => {
-        console.error("Error removing document: ", error);
-      });
-  };
+  if (!userTransactions) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>My Wallets</Text>
-      <Button
-        title="Add Transaction"
-        onPress={() => navigation.navigate("Transaction")}
-      />
+    <View style={{ flex: 1 }}>
       <ScrollView>
         <TableView>
           <Section>
@@ -55,8 +49,12 @@ export function Home({ navigation }) {
                     <Text>{transaction.description}</Text>
                     <Text>{transaction.amount}</Text>
                     <Button
-                      title="Delete"
-                      onPress={() => deleteTransaction(transaction.id)}
+                      title="View"
+                      onPress={() =>
+                        navigation.navigate("Transaction", {
+                          transactionId: transaction.id,
+                        })
+                      }
                     />
                   </View>
                 }
@@ -64,6 +62,10 @@ export function Home({ navigation }) {
             ))}
           </Section>
         </TableView>
+        <Button
+          title="Add Transaction"
+          onPress={() => navigation.navigate("Transaction", {})}
+        />
       </ScrollView>
     </View>
   );

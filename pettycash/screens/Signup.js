@@ -14,7 +14,7 @@ export function SignUp({ navigation }) {
       auth
         .createUserWithEmailAndPassword(values.email, values.password)
         .then(() => {
-          navigation.navigate("Home");
+          navigation.navigate("Wallet");
         })
         .catch((error) => {
           console.error(error);
