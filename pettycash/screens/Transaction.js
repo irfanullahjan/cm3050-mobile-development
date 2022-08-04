@@ -1,9 +1,10 @@
 import { FormikProvider, useFormik } from "formik";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Button, View } from "react-native";
+import { Alert, Button, View } from "react-native";
 import { TextInputFormik } from "../components/TextInput";
 import { auth, firestore } from "../firebase";
 import * as Yup from "yup";
+import { LoadingScreen } from "../components/LoadingScreen";
 
 export function Transaction({ navigation, route }) {
   const { transactionId } = route?.params;
@@ -64,11 +65,7 @@ export function Transaction({ navigation, route }) {
 
   if (loading) {
     return (
-      <View
-        style={{ flex: 1, alignContent: "center", justifyContent: "center" }}
-      >
-        <ActivityIndicator />
-      </View>
+      <LoadingScreen />
     );
   }
 

@@ -13,6 +13,7 @@ export function AppContextProvider(props) {
         .collection("users")
         .doc(user.uid)
         .collection("transactions")
+        .orderBy("createdAt", "desc")
         .onSnapshot((snapshot) => {
           const transactions = snapshot.docs.map((doc) => ({
             id: doc.id,

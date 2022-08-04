@@ -1,12 +1,7 @@
 import { useContext } from "react";
-import {
-  ActivityIndicator,
-  Button,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { Button, ScrollView, Text, View } from "react-native";
 import { Cell, Section, TableView } from "react-native-tableview-simple";
+import { LoadingScreen } from "../components/LoadingScreen";
 import { AppContext } from "../contexts/AppContext";
 import { auth } from "../firebase";
 
@@ -22,11 +17,7 @@ export function Wallet({ navigation }) {
   }
 
   if (!userTransactions) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator />
-      </View>
-    );
+    return <LoadingScreen />;
   }
 
   return (

@@ -1,9 +1,10 @@
 import { FormikProvider, useFormik } from "formik";
 import { useContext } from "react";
-import { Button, View } from "react-native";
+import { Alert, Button, View } from "react-native";
 import { TextInputFormik } from "../components/TextInput";
 import { AppContext } from "../contexts/AppContext";
 import { auth } from "../firebase";
+import * as Yup from "yup";
 
 export function Login({ navigation }) {
   const { setUser } = useContext(AppContext);
@@ -20,19 +21,14 @@ export function Login({ navigation }) {
           setUser(auth.currentUser);
         })
         .catch((error) => {
+          Alert.alert("Error logging in");
           console.error(error);
         });
     },
-    validate: (values) => {
-      const errors = {};
-      if (!values.email) {
-        errors.email = "Required";
-      }
-      if (!values.password) {
-        errors.password = "Required";
-      }
-      return errors;
-    },
+    validationSchema: Yup.object().shape({
+      email: Yup.string().email("Invalid email address").required("Required"),
+      password: Yup.string().required("Required"),
+    }),
   });
 
   return (

@@ -2,6 +2,7 @@ import { FormikProvider, useFormik } from "formik";
 import { Button, View } from "react-native";
 import { TextInputFormik } from "../components/TextInput";
 import { auth } from "../firebase";
+import * as Yup from "yup";
 
 export function SignUp({ navigation }) {
   const formik = useFormik({
@@ -20,23 +21,14 @@ export function SignUp({ navigation }) {
           console.error(error);
         });
     },
-    validate: (values) => {
-      console.log("validate", values);
-      const errors = {};
-      if (!values.email) {
-        errors.email = "Required";
-      } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-      ) {
-        errors.email = "Invalid email address";
-      }
-      if (!values.password) {
-        errors.password = "Required";
-      } else if (values.password !== values.confirmPassword) {
-        errors.confirmPassword = "Passwords must match";
-      }
-      return errors;
-    },
+    validationSchema: Yup.object().shape({
+      email: Yup.string().email("Invalid email address").required("Required"),
+      password: Yup.string().required("Required"),
+      confirmPassword: Yup.string().oneOf(
+        [Yup.ref("password"), null],
+        "Passwords must match"
+      ),
+    }),
   });
 
   return (
