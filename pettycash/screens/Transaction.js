@@ -64,9 +64,7 @@ export function Transaction({ navigation, route }) {
   }, [transactionId]);
 
   if (loading) {
-    return (
-      <LoadingScreen />
-    );
+    return <LoadingScreen />;
   }
 
   const deleteTransaction = (id) => {
@@ -112,11 +110,13 @@ export function Transaction({ navigation, route }) {
           keyboardType="numeric"
         />
         <Button onPress={formik.submitForm} title="Submit" />
-        <Button
-          onPress={() => confirmDelete(transactionId)}
-          title="Delete"
-          color={"red"}
-        />
+        {transactionId && (
+          <Button
+            onPress={() => confirmDelete(transactionId)}
+            title="Delete"
+            color={"red"}
+          />
+        )}
       </FormikProvider>
     </View>
   );
