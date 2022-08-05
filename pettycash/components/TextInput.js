@@ -1,10 +1,10 @@
 import { useField } from "formik";
-import { Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 
 export function TextInputFormik({ name, ...props }) {
   const [field, meta, helpers] = useField({ name });
   return (
-    <View style={{  margin: 10, padding: 10, borderWidth: 1, borderColor: "black" }}>
+    <View style={styles.container}>
       <TextInput
         style={{ fontSize: 20 }}
         {...props}
@@ -20,3 +20,13 @@ export function TextInputFormik({ name, ...props }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 10,
+    marginTop: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "gray",
+  },
+});

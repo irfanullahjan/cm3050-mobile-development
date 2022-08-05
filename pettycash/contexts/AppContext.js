@@ -9,11 +9,11 @@ export function AppContextProvider(props) {
 
   useEffect(() => {
     if (user) {
-      firestore
+      let unsubscribe = firestore
         .collection("users")
         .doc(user.uid)
         .collection("transactions")
-        .orderBy("createdAt", "desc")
+        .orderBy("createdAt", "asc")
         .onSnapshot((snapshot) => {
           const transactions = snapshot.docs.map((doc) => ({
             id: doc.id,
@@ -21,6 +21,7 @@ export function AppContextProvider(props) {
           }));
           setUserTransactions(transactions);
         });
+      return () => unsubscribe();
     }
   }, [user]);
 
