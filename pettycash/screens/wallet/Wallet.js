@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { Button, ScrollView, Text, View } from "react-native";
 import { Cell, Section, TableView } from "react-native-tableview-simple";
-import { LoadingScreen } from "../components/LoadingScreen";
-import { AppContext } from "../contexts/AppContext";
-import { auth } from "../firebase";
+import { LoadingScreen } from "../../components/LoadingScreen";
+import { AppContext } from "../../contexts/AppContext";
+import { auth } from "../../firebase";
 
-export function WalletHome({ navigation }) {
+export function Wallet({ navigation }) {
   const { userTransactions } = useContext(AppContext);
 
   if (!auth.currentUser) {

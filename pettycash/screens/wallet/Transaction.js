@@ -1,10 +1,10 @@
 import { FormikProvider, useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { Alert, Button, View } from "react-native";
-import { TextInputFormik } from "../components/TextInput";
-import { auth, firestore } from "../firebase";
+import { TextInputFormik } from "../../components/TextInput";
+import { auth, firestore } from "../../firebase";
 import * as Yup from "yup";
-import { LoadingScreen } from "../components/LoadingScreen";
+import { LoadingScreen } from "../../components/LoadingScreen";
 
 export function Transaction({ navigation, route }) {
   const { transactionId } = route?.params;
