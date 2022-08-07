@@ -30,7 +30,7 @@ export function Wallet({ navigation }) {
                 key={transaction.id}
                 cellStyle="RightDetail"
                 title={transaction.description}
-                detail={transaction.amount}
+                detail={(+transaction.amount).toLocaleString()}
                 onPress={() =>
                   navigation.navigate("Transaction", {
                     transactionId: transaction.id,
@@ -38,6 +38,13 @@ export function Wallet({ navigation }) {
                 }
               />
             ))}
+          </Section>
+          <Section>
+            <Cell
+              cellStyle="RightDetail"
+              title="Balance"
+              detail={(+userTransactions.reduce((acc, curr) => curr.type === "INCOME" ? acc + curr.amount : acc - curr.amount, 0)).toLocaleString()}
+            />
           </Section>
         </TableView>
         <Button

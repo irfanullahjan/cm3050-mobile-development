@@ -1,6 +1,6 @@
 import { FormikProvider, useFormik } from "formik";
 import { useEffect, useState } from "react";
-import { Alert, Button, View } from "react-native";
+import { Alert, Button, View, Picker, Pressable, Text } from "react-native";
 import { TextInputFormik } from "../../components/TextInput";
 import { auth, firestore } from "../../firebase";
 import * as Yup from "yup";
@@ -12,7 +12,9 @@ export function Transaction({ navigation, route }) {
   const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
-    initialValues: {},
+    initialValues: {
+      type: "EXPENSE"
+    },
     onSubmit: (values) => {
       let objectRef = firestore
         .collection("users")
@@ -100,6 +102,18 @@ export function Transaction({ navigation, route }) {
     );
   };
 
+  const transactionTypes = [{
+    label: "Income",
+    value: "INCOME",
+  }, {
+    label: "Expense",
+    value: "EXPENSE",
+  }];
+
+  const handlePressTransactionType = (type) => {
+    formik.setFieldValue("type", type.value);
+  };
+
   return (
     <View>
       <FormikProvider value={formik}>
@@ -109,6 +123,18 @@ export function Transaction({ navigation, route }) {
           placeholder="Amount"
           keyboardType="numeric"
         />
+        <View style={{ margin: 15, flexDirection: "row" }}>
+        {transactionTypes.map((type) => (
+          <Pressable
+            key={type.value}
+            onPress={() => handlePressTransactionType(type)}
+          >
+            <View style={[formik.values.type === type.value ? { backgroundColor: "lightgray" } : {}, {padding: 10}]}>
+              <Text>{type.label}</Text>
+            </View>
+          </Pressable>
+        ))}
+        </View>
         <Button onPress={formik.submitForm} title="Submit" />
         {transactionId && (
           <Button

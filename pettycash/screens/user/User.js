@@ -4,7 +4,7 @@ import { Cell, Section, TableView } from "react-native-tableview-simple";
 import { AppContext } from "../../contexts/AppContext";
 import { auth } from "../../firebase";
 
-export function User() {
+export function User({ navigation }) {
   const { setUser } = useContext(AppContext);
 
   const confirmLogout = () => {
@@ -47,6 +47,11 @@ export function User() {
               cellStyle="Basic"
               title="Logout"
               onPress={() => confirmLogout()}
+            />
+            <Cell
+              cellStyle="Basic"
+              title="User Detail"
+              onPress={() => navigation.navigate("User Detail", {})}
             />
           </Section>
         </TableView>
