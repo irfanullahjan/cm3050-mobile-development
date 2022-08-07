@@ -5,7 +5,7 @@ import { LoadingScreen } from "../components/LoadingScreen";
 import { AppContext } from "../contexts/AppContext";
 import { auth } from "../firebase";
 
-export function Wallet({ navigation }) {
+export function WalletHome({ navigation }) {
   const { userTransactions } = useContext(AppContext);
 
   if (!auth.currentUser) {
