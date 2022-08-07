@@ -2,8 +2,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
 import { Settings } from "../screens/Settings";
-import { User } from "../screens/User";
-import { WalletTab } from "../navigation/WalletTab";
+import { UserStack } from "./UserStack";
+import { WalletStack } from "./WalletStack";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { AuthNav } from "./AuthNav";
 import { Text } from "react-native";
@@ -42,8 +42,8 @@ export function TabNavigation() {
         }
       })}
     >
-      <Tab.Screen name="WalletTab" component={WalletTab} />
-      <Tab.Screen name="UserTab" component={User} />
+      <Tab.Screen name="WalletTab" component={WalletStack} />
+      <Tab.Screen name="UserTab" component={UserStack} />
       <Tab.Screen name="SettingsTab" component={Settings} />
     </Tab.Navigator>
   );

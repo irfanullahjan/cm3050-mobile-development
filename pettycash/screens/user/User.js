@@ -1,7 +1,8 @@
 import { useContext } from "react";
-import { Alert, Button, View } from "react-native";
-import { AppContext } from "../contexts/AppContext";
-import { auth } from "../firebase";
+import { Alert, ScrollView, Text, View } from "react-native";
+import { Cell, Section, TableView } from "react-native-tableview-simple";
+import { AppContext } from "../../contexts/AppContext";
+import { auth } from "../../firebase";
 
 export function User() {
   const { setUser } = useContext(AppContext);
@@ -37,8 +38,19 @@ export function User() {
   };
 
   return (
-    <View>
-      <Button title="Logout" onPress={confirmLogout} />
+    <View style={{ flex: 1 }}>
+      <ScrollView>
+        <Text style={{margin: 15}}>Currently logged in as {auth.currentUser.email}</Text>
+        <TableView>
+          <Section>
+            <Cell
+              cellStyle="Basic"
+              title="Logout"
+              onPress={() => confirmLogout()}
+            />
+          </Section>
+        </TableView>
+      </ScrollView>
     </View>
   );
 }

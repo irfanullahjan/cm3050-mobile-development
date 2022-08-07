@@ -28,26 +28,13 @@ export function Wallet({ navigation }) {
             {userTransactions.map((transaction) => (
               <Cell
                 key={transaction.id}
-                cellStyle="Basic"
-                cellContentView={
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      width: "100%",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Text>{transaction.description}</Text>
-                    <Text>{transaction.amount}</Text>
-                    <Button
-                      title="View"
-                      onPress={() =>
-                        navigation.navigate("Transaction", {
-                          transactionId: transaction.id,
-                        })
-                      }
-                    />
-                  </View>
+                cellStyle="RightDetail"
+                title={transaction.description}
+                detail={transaction.amount}
+                onPress={() =>
+                  navigation.navigate("Transaction", {
+                    transactionId: transaction.id,
+                  })
                 }
               />
             ))}
