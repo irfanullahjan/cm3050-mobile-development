@@ -43,7 +43,7 @@ export function Wallet({ navigation }) {
             <Cell
               cellStyle="RightDetail"
               title="Balance"
-              detail={(+userTransactions.reduce((acc, curr) => curr.type === "INCOME" ? acc + curr.amount : acc - curr.amount, 0)).toLocaleString()}
+              detail={(+userTransactions.reduce((acc, curr) => curr.type === "INCOME" ? +acc + +curr.amount : +acc - curr.amount, 0)).toLocaleString()}
             />
           </Section>
         </TableView>
