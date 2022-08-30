@@ -1,20 +1,22 @@
+import { useTheme } from "@react-navigation/native";
 import { useField } from "formik";
 import { StyleSheet, Text, TextInput as TextInputReactNative, View } from "react-native";
 
 export function TextInput({ name, placeholder, ...props }) {
   const [field, meta, helpers] = useField({ name });
+  const { colors } = useTheme();
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{placeholder}</Text>
+      <Text style={[styles.label, {color: colors.text}]}>{placeholder}</Text>
       <TextInputReactNative
-        style={styles.input}
+        style={[styles.input, {color: colors.text}]}
         {...props}
         onChangeText={helpers.setValue}
         onBlur={() => helpers.setTouched(true)}
         value={field.value}
       />
       {meta.touched && meta.error ? (
-        <Text style={{ color: "red" }}>{meta.error}</Text>
+        <Text style={{ color: colors.notification }}>{meta.error}</Text>
       ) : (
         <Text> </Text>
       )}

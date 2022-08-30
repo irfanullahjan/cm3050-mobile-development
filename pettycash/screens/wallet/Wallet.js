@@ -4,10 +4,12 @@ import { Button, ScrollView, Text, View } from "react-native";
 import { Cell, Section, TableView } from "react-native-tableview-simple";
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { useThemeContext } from "../../contexts/ThemeContext";
 import { auth, firestore } from "../../firebase";
 
 export function Wallet({ navigation }) {
   const { user } = useAuthContext();
+  const { darkMode } = useThemeContext();
   const [userTransactions, setUserTransactions] = useState(null);
 
   useEffect(() => {
@@ -47,7 +49,7 @@ export function Wallet({ navigation }) {
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
-        <TableView>
+        <TableView appearance={darkMode ? "dark" : "light"}>
           <Section>
             {userTransactions.map((transaction) => (
               <Cell
@@ -60,6 +62,7 @@ export function Wallet({ navigation }) {
                     transactionId: transaction.id,
                   })
                 }
+                accessory="DisclosureIndicator"
               />
             ))}
           </Section>

@@ -6,10 +6,10 @@ import { Cell, Section, TableView } from "react-native-tableview-simple";
 import { useThemeContext } from "../contexts/ThemeContext";
 
 export function Settings() {
-  const systemDarkMode = useColorScheme() === "dark" ? true : false;
   const { darkMode, setDarkMode } = useThemeContext();
   const [userDarkModeSwitch, setUserDarkModeSwitch] = useState(false);
   const [systemDarkModeSwitch, setSystemDarkModeSwitch] = useState(false);
+  const systemDarkMode = useColorScheme() === "dark" ? true : false;
 
   const toggleUserDarkModeSwitch = () => {
     setUserDarkModeSwitch((previous) => {

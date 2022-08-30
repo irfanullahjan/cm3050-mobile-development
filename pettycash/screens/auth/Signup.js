@@ -1,6 +1,6 @@
 import { FormikProvider, useFormik } from "formik";
 import { Button, View } from "react-native";
-import { TextInputFormik } from "../../components/TextInput";
+import { TextInput } from "../../components/TextInput";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import * as Yup from "yup";
 import { auth } from "../../firebase";
@@ -34,7 +34,7 @@ export function SignUp({ navigation }) {
   return (
     <View>
       <FormikProvider value={formik}>
-        <TextInputFormik
+        <TextInput
           name="email"
           placeholder="Email"
           textContentType="emailAddress"
@@ -43,7 +43,7 @@ export function SignUp({ navigation }) {
           autoCorrect={false}
           keyboardType="email-address"
         />
-        <TextInputFormik
+        <TextInput
           name="password"
           placeholder="Password"
           textContentType="password"
@@ -52,7 +52,7 @@ export function SignUp({ navigation }) {
           autoCorrect={false}
           secureTextEntry={true}
         />
-        <TextInputFormik
+        <TextInput
           name="confirmPassword"
           placeholder="Confirm Password"
           textContentType="password"

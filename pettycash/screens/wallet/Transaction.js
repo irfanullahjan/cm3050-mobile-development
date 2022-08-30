@@ -129,7 +129,6 @@ export function Transaction({ navigation, route }) {
         <Button
           onPress={formik.submitForm}
           title="Submit"
-          disabled={!formik.isValid || !formik.dirty}
         />
         {transactionId && (
           <Button

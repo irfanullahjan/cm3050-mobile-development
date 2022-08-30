@@ -1,12 +1,15 @@
+import { useTheme } from "@react-navigation/native";
 import { useField } from "formik";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 export function ButtonSelect({ name, label, options }) {
   const [field, meta, helpers] = useField(name);
 
+  const { colors } = useTheme();
+
   return (
     <>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, {color: colors.text}]}>{label}</Text>
       <View style={styles.container}>
         <View style={styles.buttons}>
           {options.map((option) => (
@@ -16,11 +19,11 @@ export function ButtonSelect({ name, label, options }) {
             >
               <View
                 style={[
-                  field.value === option.value ? styles.buttonSelected : {},
-                  styles.button,
+                  field.value === option.value && {backgroundColor: colors.border},
+                  styles.button
                 ]}
               >
-                <Text>{option.label}</Text>
+                <Text style={{color: colors.text}}>{option.label}</Text>
               </View>
             </Pressable>
           ))}
@@ -46,8 +49,5 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 10,
-  },
-  buttonSelected: {
-    backgroundColor: "lightgray",
   },
 });
