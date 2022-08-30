@@ -1,11 +1,12 @@
 import { FormikProvider, useFormik } from "formik";
 import { useEffect, useState } from "react";
-import { Alert, Button, View, Picker, Pressable, Text } from "react-native";
-import { TextInputFormik } from "../../components/TextInput";
+import { Alert, Button, View, StyleSheet } from "react-native";
+import { TextInput} from "../../components/TextInput";
 import { auth, firestore } from "../../firebase";
 import * as Yup from "yup";
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import { ButtonSelect } from "../../components/ButtonSelect";
 
 export function Transaction({ navigation, route }) {
   const { transactionId } = route?.params;
@@ -111,39 +112,25 @@ export function Transaction({ navigation, route }) {
     },
   ];
 
-  const handlePressTransactionType = (type) => {
-    formik.setFieldValue("type", type.value);
-  };
-
   return (
-    <View>
+    <View style={styles.container}>
       <FormikProvider value={formik}>
-        <TextInputFormik name="description" placeholder="Description" />
-        <TextInputFormik
+        <TextInput name="description" placeholder="Description" />
+        <TextInput
           name="amount"
           placeholder="Amount"
           keyboardType="numeric"
         />
-        <View style={{ margin: 15, flexDirection: "row" }}>
-          {transactionTypes.map((type) => (
-            <Pressable
-              key={type.value}
-              onPress={() => handlePressTransactionType(type)}
-            >
-              <View
-                style={[
-                  formik.values.type === type.value
-                    ? { backgroundColor: "lightgray" }
-                    : {},
-                  { padding: 10 },
-                ]}
-              >
-                <Text>{type.label}</Text>
-              </View>
-            </Pressable>
-          ))}
-        </View>
-        <Button onPress={formik.submitForm} title="Submit" />
+        <ButtonSelect
+          name="type"
+          label="Type"
+          options={transactionTypes}
+        />
+        <Button
+          onPress={formik.submitForm}
+          title="Submit"
+          disabled={!formik.isValid || !formik.dirty}
+        />
         {transactionId && (
           <Button
             onPress={() => confirmDelete(transactionId)}
@@ -155,3 +142,9 @@ export function Transaction({ navigation, route }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 15,
+  },
+});
