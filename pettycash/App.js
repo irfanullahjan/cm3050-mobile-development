@@ -4,19 +4,22 @@ import { AuthContextProvider } from "./contexts/AuthContext";
 import { NavigationContainer } from "@react-navigation/native";
 import { TabNavigation } from "./navigation/TabNavigation";
 import "./firebase";
+import { ThemeContextProvider } from "./contexts/ThemeContext";
 
 export default function App() {
   return (
-    <AuthContextProvider>
-      <View style={styles.container}>
-        <SafeAreaView style={{ flex: 1, width: "100%" }}>
-          <NavigationContainer>
-            <TabNavigation />
-          </NavigationContainer>
-          <StatusBar style="auto" />
-        </SafeAreaView>
-      </View>
-    </AuthContextProvider>
+    <ThemeContextProvider>
+      <AuthContextProvider>
+        <View style={styles.container}>
+          <SafeAreaView style={{ flex: 1, width: "100%" }}>
+            <NavigationContainer>
+              <TabNavigation />
+            </NavigationContainer>
+            <StatusBar style="auto" />
+          </SafeAreaView>
+        </View>
+      </AuthContextProvider>
+    </ThemeContextProvider>
   );
 }
 
