@@ -1,9 +1,13 @@
+import { useTheme } from "@react-navigation/native";
 import { signOut } from "firebase/auth";
 import { Alert, ScrollView, Text, View } from "react-native";
 import { Cell, Section, TableView } from "react-native-tableview-simple";
+import { useThemeContext } from "../../contexts/ThemeContext";
 import { auth } from "../../firebase";
 
 export function User({ navigation }) {
+  const { darkMode } = useThemeContext();
+  const { colors } = useTheme();
   const confirmLogout = () => {
     Alert.alert(
       "Logout",
@@ -23,19 +27,18 @@ export function User({ navigation }) {
   };
 
   const logout = () => {
-    signOut(auth)
-      .catch((error) => {
-        console.error(error);
-      });
+    signOut(auth).catch((error) => {
+      console.error(error);
+    });
   };
 
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
-        <Text style={{ margin: 15 }}>
+        <Text style={{ margin: 15, color: colors.text }}>
           Currently logged in as {auth.currentUser.email}
         </Text>
-        <TableView>
+        <TableView appearance={darkMode ? "dark" : "light"}>
           <Section>
             <Cell
               cellStyle="Basic"

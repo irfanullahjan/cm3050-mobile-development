@@ -33,10 +33,11 @@ export function TabNavigation() {
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         headerShown: false,
-        tabBarLabel: ({ focused }) => {
+        tabBarLabel: ({ focused, color }) => {
           const label = route.name.replace(/Tab$/, "");
-          const style = focused ? { color: "black" } : { color: "gray" };
+          const style = focused ? { fontWeight: "bold" } : {};
           style.fontSize = 11;
+          style.color = color;
           return <Text style={style}>{label}</Text>
         }
       })}
