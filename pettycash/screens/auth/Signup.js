@@ -1,8 +1,9 @@
 import { FormikProvider, useFormik } from "formik";
 import { Button, View } from "react-native";
 import { TextInputFormik } from "../../components/TextInput";
-import { auth } from "../../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import * as Yup from "yup";
+import { auth } from "../../firebase";
 
 export function SignUp({ navigation }) {
   const formik = useFormik({
@@ -11,11 +12,10 @@ export function SignUp({ navigation }) {
       password: "",
       confirmPassword: "",
     },
-    onSubmit: (values) => {
-      auth
-        .createUserWithEmailAndPassword(values.email, values.password)
+    onSubmit: ({ email, password }) => {
+      createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
-          navigation.navigate("Wallet");
+          navigation.navigate("Login");
         })
         .catch((error) => {
           console.error(error);

@@ -1,12 +1,9 @@
-import { useContext } from "react";
+import { signOut } from "firebase/auth";
 import { Alert, ScrollView, Text, View } from "react-native";
 import { Cell, Section, TableView } from "react-native-tableview-simple";
-import { AppContext } from "../../contexts/AppContext";
 import { auth } from "../../firebase";
 
 export function User({ navigation }) {
-  const { setUser } = useContext(AppContext);
-
   const confirmLogout = () => {
     Alert.alert(
       "Logout",
@@ -26,10 +23,8 @@ export function User({ navigation }) {
   };
 
   const logout = () => {
-    auth
-      .signOut()
+    signOut(auth)
       .then(() => {
-        setUser(null);
         console.log("Logged out");
       })
       .catch((error) => {
@@ -40,7 +35,9 @@ export function User({ navigation }) {
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
-        <Text style={{margin: 15}}>Currently logged in as {auth.currentUser.email}</Text>
+        <Text style={{ margin: 15 }}>
+          Currently logged in as {auth.currentUser.email}
+        </Text>
         <TableView>
           <Section>
             <Cell

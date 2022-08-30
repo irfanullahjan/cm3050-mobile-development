@@ -5,6 +5,7 @@ import { TextInputFormik } from "../../components/TextInput";
 import { auth, firestore } from "../../firebase";
 import * as Yup from "yup";
 import { LoadingScreen } from "../../components/LoadingScreen";
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 
 export function Transaction({ navigation, route }) {
   const { transactionId } = route?.params;
@@ -13,22 +14,24 @@ export function Transaction({ navigation, route }) {
 
   const formik = useFormik({
     initialValues: {
-      type: "EXPENSE"
+      type: "EXPENSE",
     },
     onSubmit: (values) => {
-      let objectRef = firestore
-        .collection("users")
-        .doc(auth.currentUser.uid)
-        .collection("transactions");
+      const path = ["users", auth.currentUser.uid, "transactions"];
+      let data;
       if (transactionId) {
-        objectRef = objectRef.doc(transactionId).update(values);
+        path.push(transactionId);
+        data = {
+          ...values,
+          updatedAt: new Date(),
+        };
       } else {
-        objectRef = objectRef.add({
+        data = {
           ...values,
           createdAt: new Date(),
-        });
+        };
       }
-      objectRef
+      setDoc(doc(firestore, ...path), data)
         .then(() => {
           navigation.navigate("Wallet");
         })
@@ -46,21 +49,21 @@ export function Transaction({ navigation, route }) {
 
   useEffect(() => {
     if (transactionId) {
+      const uid = auth.currentUser.uid;
+      if (!uid) {
+        return;
+      }
       setLoading(true);
-      firestore
-        .collection("users")
-        .doc(auth.currentUser.uid)
-        .collection("transactions")
-        .doc(transactionId)
-        .get()
+      getDoc(doc(firestore, "users", uid, "transactions", transactionId))
         .then((doc) => {
-          console.log(doc.data());
-          formik.setValues({ ...doc.data() });
           setLoading(false);
+          if (doc.exists()) {
+            formik.setValues(doc.data());
+          }
         })
         .catch((error) => {
-          console.error(error);
           setLoading(false);
+          console.error(error);
         });
     }
   }, [transactionId]);
@@ -70,12 +73,7 @@ export function Transaction({ navigation, route }) {
   }
 
   const deleteTransaction = (id) => {
-    firestore
-      .collection("users")
-      .doc(auth.currentUser.uid)
-      .collection("transactions")
-      .doc(id)
-      .delete()
+    deleteDoc(doc(firestore, "users", auth.currentUser.uid, "transactions", id))
       .then(() => {
         navigation.navigate("Wallet");
       })
@@ -102,13 +100,16 @@ export function Transaction({ navigation, route }) {
     );
   };
 
-  const transactionTypes = [{
-    label: "Income",
-    value: "INCOME",
-  }, {
-    label: "Expense",
-    value: "EXPENSE",
-  }];
+  const transactionTypes = [
+    {
+      label: "Income",
+      value: "INCOME",
+    },
+    {
+      label: "Expense",
+      value: "EXPENSE",
+    },
+  ];
 
   const handlePressTransactionType = (type) => {
     formik.setFieldValue("type", type.value);
@@ -124,16 +125,23 @@ export function Transaction({ navigation, route }) {
           keyboardType="numeric"
         />
         <View style={{ margin: 15, flexDirection: "row" }}>
-        {transactionTypes.map((type) => (
-          <Pressable
-            key={type.value}
-            onPress={() => handlePressTransactionType(type)}
-          >
-            <View style={[formik.values.type === type.value ? { backgroundColor: "lightgray" } : {}, {padding: 10}]}>
-              <Text>{type.label}</Text>
-            </View>
-          </Pressable>
-        ))}
+          {transactionTypes.map((type) => (
+            <Pressable
+              key={type.value}
+              onPress={() => handlePressTransactionType(type)}
+            >
+              <View
+                style={[
+                  formik.values.type === type.value
+                    ? { backgroundColor: "lightgray" }
+                    : {},
+                  { padding: 10 },
+                ]}
+              >
+                <Text>{type.label}</Text>
+              </View>
+            </Pressable>
+          ))}
         </View>
         <Button onPress={formik.submitForm} title="Submit" />
         {transactionId && (

@@ -3,6 +3,7 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 import { AppContextProvider } from "./contexts/AppContext";
 import { NavigationContainer } from "@react-navigation/native";
 import { TabNavigation } from "./navigation/TabNavigation";
+import "./firebase";
 
 export default function App() {
   return (

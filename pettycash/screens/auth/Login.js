@@ -1,24 +1,20 @@
 import { FormikProvider, useFormik } from "formik";
-import { useContext } from "react";
 import { Alert, Button, View } from "react-native";
 import { TextInputFormik } from "../../components/TextInput";
-import { AppContext } from "../../contexts/AppContext";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import * as Yup from "yup";
 
 export function Login({ navigation }) {
-  const { setUser } = useContext(AppContext);
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    onSubmit: (values) => {
-      auth
-        .signInWithEmailAndPassword(values.email, values.password)
+    onSubmit: ({ email, password }) => {
+      signInWithEmailAndPassword(auth, email, password)
         .then(() => {
           console.log("User signed in");
-          setUser(auth.currentUser);
         })
         .catch((error) => {
           Alert.alert("Error logging in");

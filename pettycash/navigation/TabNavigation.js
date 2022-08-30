@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useContext } from "react";
-import { AppContext } from "../contexts/AppContext";
+import { useAppContext } from "../contexts/AppContext";
 import { Settings } from "../screens/Settings";
 import { UserStack } from "./UserStack";
 import { WalletStack } from "./WalletStack";
@@ -11,7 +10,7 @@ import { Text } from "react-native";
 export function TabNavigation() {
   const Tab = createBottomTabNavigator();
 
-  const { user } = useContext(AppContext);
+  const { user } = useAppContext();
 
   if (!user) {
     return <AuthNav />;
