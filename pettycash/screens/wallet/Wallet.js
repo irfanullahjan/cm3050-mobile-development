@@ -1,11 +1,32 @@
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { Button, ScrollView, Text, View } from "react-native";
 import { Cell, Section, TableView } from "react-native-tableview-simple";
 import { LoadingScreen } from "../../components/LoadingScreen";
-import { useAppContext } from "../../contexts/AppContext";
-import { auth } from "../../firebase";
+import { useAuthContext } from "../../contexts/AuthContext";
+import { auth, firestore } from "../../firebase";
 
 export function Wallet({ navigation }) {
-  const { userTransactions } = useAppContext();
+  const { user } = useAuthContext();
+  const [userTransactions, setUserTransactions] = useState(null);
+
+  useEffect(() => {
+    if (user) {
+      return onSnapshot(
+        query(
+          collection(firestore, "users", user.uid, "transactions"),
+          orderBy("createdAt", "asc")
+        ),
+        (snapshot) => {
+          const transactions = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setUserTransactions(transactions);
+        }
+      );
+    }
+  }, [user]);
 
   if (!auth.currentUser) {
     return (
@@ -18,6 +39,10 @@ export function Wallet({ navigation }) {
   if (!userTransactions) {
     return <LoadingScreen />;
   }
+
+  const total = userTransactions.reduce((total, curr) => {
+    return total + (curr.type === "INCOME" ? +curr.amount : -curr.amount);
+  }, 0);
 
   return (
     <View style={{ flex: 1 }}>
@@ -42,7 +67,7 @@ export function Wallet({ navigation }) {
             <Cell
               cellStyle="RightDetail"
               title="Balance"
-              detail={(+userTransactions.reduce((acc, curr) => curr.type === "INCOME" ? +acc + +curr.amount : +acc - curr.amount, 0)).toLocaleString()}
+              detail={total.toLocaleString()}
             />
           </Section>
         </TableView>

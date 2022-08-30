@@ -1,12 +1,12 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { SignUp } from "../screens/auth/Signup";
 import { Login } from "../screens/auth/Login";
-import { useAppContext } from "../contexts/AppContext";
+import { useAuthContext } from "../contexts/AuthContext";
 import { LoadingScreen } from "../components/LoadingScreen";
 
 export function AuthNav() {
   const Stack = createStackNavigator();
-  const { user } = useAppContext();
+  const { user } = useAuthContext();
 
   if (user === undefined) {
     // auth is not initialized yet

@@ -13,9 +13,6 @@ export function Login({ navigation }) {
     },
     onSubmit: ({ email, password }) => {
       signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          console.log("User signed in");
-        })
         .catch((error) => {
           Alert.alert("Error logging in");
           console.error(error);

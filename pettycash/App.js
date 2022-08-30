@@ -1,13 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import { AppContextProvider } from "./contexts/AppContext";
+import { AuthContextProvider } from "./contexts/AuthContext";
 import { NavigationContainer } from "@react-navigation/native";
 import { TabNavigation } from "./navigation/TabNavigation";
 import "./firebase";
 
 export default function App() {
   return (
-    <AppContextProvider>
+    <AuthContextProvider>
       <View style={styles.container}>
         <SafeAreaView style={{ flex: 1, width: "100%" }}>
           <NavigationContainer>
@@ -16,7 +16,7 @@ export default function App() {
           <StatusBar style="auto" />
         </SafeAreaView>
       </View>
-    </AppContextProvider>
+    </AuthContextProvider>
   );
 }
 

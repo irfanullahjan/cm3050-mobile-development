@@ -24,9 +24,6 @@ export function User({ navigation }) {
 
   const logout = () => {
     signOut(auth)
-      .then(() => {
-        console.log("Logged out");
-      })
       .catch((error) => {
         console.error(error);
       });
