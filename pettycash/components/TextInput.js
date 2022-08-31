@@ -21,8 +21,13 @@ export function TextInput({ name, placeholder, ...props }) {
           styles.input,
           {
             color: colors.text,
-            borderColor: focused ? colors.primary : colors.border,
-            ...(focused ? {backgroundColor: colors.card} : {}),
+            borderColor:
+              meta.error && meta.touched
+                ? colors.notification
+                : focused
+                ? colors.primary
+                : colors.border,
+            ...(focused ? { backgroundColor: colors.card } : {}),
           },
         ]}
         {...props}

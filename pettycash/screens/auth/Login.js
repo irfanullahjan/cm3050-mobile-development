@@ -1,5 +1,5 @@
 import { FormikProvider, useFormik } from "formik";
-import { Alert, Button, View } from "react-native";
+import { Alert, Button } from "react-native";
 import { TextInput } from "../../components/TextInput";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
@@ -13,11 +13,10 @@ export function Login() {
       password: "",
     },
     onSubmit: ({ email, password }) => {
-      signInWithEmailAndPassword(auth, email, password)
-        .catch((error) => {
-          Alert.alert("Error logging in");
-          console.error(error);
-        });
+      signInWithEmailAndPassword(auth, email, password).catch((error) => {
+        Alert.alert("Error logging in");
+        console.error(error);
+      });
     },
     validationSchema: Yup.object().shape({
       email: Yup.string().email("Invalid email address").required("Required"),

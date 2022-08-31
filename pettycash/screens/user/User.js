@@ -1,13 +1,11 @@
-import { useTheme } from "@react-navigation/native";
 import { signOut } from "firebase/auth";
-import { Alert, ScrollView, Text, View } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 import { Cell, Section, TableView } from "react-native-tableview-simple";
 import { useThemeContext } from "../../contexts/ThemeContext";
 import { auth } from "../../firebase";
 
 export function User({ navigation }) {
   const { darkMode } = useThemeContext();
-  const { colors } = useTheme();
   const confirmLogout = () => {
     Alert.alert(
       "Logout",

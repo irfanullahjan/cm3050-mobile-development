@@ -9,9 +9,9 @@ export function ButtonSelect({ name, label, options }) {
 
   return (
     <>
-      <Text style={[styles.label, {color: colors.text}]}>{label}</Text>
+      <Text style={[styles.label, { color: colors.text }]}>{label}</Text>
       <View style={styles.container}>
-        <View style={[styles.buttons, {borderColor: colors.border}]}>
+        <View style={[styles.buttons, { borderColor: colors.border }]}>
           {options.map((option) => (
             <Pressable
               key={option.value}
@@ -19,11 +19,13 @@ export function ButtonSelect({ name, label, options }) {
             >
               <View
                 style={[
-                  field.value === option.value && {backgroundColor: colors.border},
-                  styles.button
+                  field.value === option.value && {
+                    backgroundColor: colors.border,
+                  },
+                  styles.button,
                 ]}
               >
-                <Text style={{color: colors.text}}>{option.label}</Text>
+                <Text style={{ color: colors.text }}>{option.label}</Text>
               </View>
             </Pressable>
           ))}

@@ -13,7 +13,9 @@ export function MainView() {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView style={[styles.safeArea, darkMode && ({backgroundColor: "black"}) ]}>
+      <SafeAreaView
+        style={[styles.safeArea, darkMode && { backgroundColor: "black" }]}
+      >
         <NavigationContainer theme={darkMode ? DarkTheme : DefaultTheme}>
           <TabNavigation />
         </NavigationContainer>

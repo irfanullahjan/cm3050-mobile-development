@@ -4,7 +4,7 @@ import { useThemeContext } from "../../contexts/ThemeContext";
 import { auth } from "../../firebase";
 
 export function UserDetail() {
-  const {darkMode} = useThemeContext();
+  const { darkMode } = useThemeContext();
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>

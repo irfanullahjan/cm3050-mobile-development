@@ -5,7 +5,14 @@ import { TextInput } from "../../components/TextInput";
 import { auth, firestore } from "../../firebase";
 import * as Yup from "yup";
 import { LoadingScreen } from "../../components/LoadingScreen";
-import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  setDoc,
+} from "firebase/firestore";
 import { ButtonSelect } from "../../components/ButtonSelect";
 import { FormContainer } from "../../components/FormContainer";
 
@@ -45,7 +52,8 @@ export function Transaction({ navigation, route }) {
     },
     validationSchema: Yup.object().shape({
       description: Yup.string().required("Required"),
-      amount: Yup.number("Must be a number")
+      amount: Yup.number()
+        .typeError("Not a valid number")
         .positive("Must be positive")
         .required("Required"),
     }),

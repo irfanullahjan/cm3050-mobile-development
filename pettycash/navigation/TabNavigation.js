@@ -1,11 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useAuthContext } from "../contexts/AuthContext";
-import { Settings } from "../screens/settings/Settings";
 import { UserStack } from "./UserStack";
 import { WalletStack } from "./WalletStack";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { AuthNav } from "./AuthNav";
-import { Text, View } from "react-native";
 import { SettingsStack } from "./SettingsStack";
 
 export function TabNavigation() {

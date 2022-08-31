@@ -1,5 +1,5 @@
 import { FormikProvider, useFormik } from "formik";
-import { Alert, Button, View } from "react-native";
+import { Alert, Button } from "react-native";
 import { TextInput } from "../../components/TextInput";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import * as Yup from "yup";
@@ -19,7 +19,9 @@ export function SignUp({ navigation }) {
           navigation.navigate("Login");
         })
         .catch((error) => {
-          Alert.alert("Error signing up, please try again perhaps with a different email address");
+          Alert.alert(
+            "Error signing up, please try again perhaps with a different email address"
+          );
           console.error(error);
         });
     },
