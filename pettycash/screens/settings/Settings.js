@@ -1,5 +1,4 @@
-import { StyleSheet, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { TableView } from "react-native-tableview-simple";
 import { useThemeContext } from "../../contexts/ThemeContext";
 import { ThemeSettingsSection } from "./components/ThemeSettingsSection";

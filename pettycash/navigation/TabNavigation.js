@@ -5,7 +5,8 @@ import { UserStack } from "./UserStack";
 import { WalletStack } from "./WalletStack";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { AuthNav } from "./AuthNav";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
+import { SettingsStack } from "./SettingsStack";
 
 export function TabNavigation() {
   const Tab = createBottomTabNavigator();
@@ -32,17 +33,13 @@ export function TabNavigation() {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
+        tabBarShowLabel: false,
         headerShown: false,
-        tabBarLabel: ({ color }) => (
-          <Text style={{ fontSize: 11, color }}>
-            {route.name.replace(/Tab$/, "")}
-          </Text>
-        ),
       })}
     >
       <Tab.Screen name="WalletTab" component={WalletStack} />
       <Tab.Screen name="UserTab" component={UserStack} />
-      <Tab.Screen name="SettingsTab" component={Settings} />
+      <Tab.Screen name="SettingsTab" component={SettingsStack} />
     </Tab.Navigator>
   );
 }
