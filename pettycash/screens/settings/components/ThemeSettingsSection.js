@@ -1,12 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-import { StyleSheet, View, Switch, useColorScheme } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { Cell, Section, TableView } from "react-native-tableview-simple";
-import { useThemeContext } from "../contexts/ThemeContext";
+import { Switch, useColorScheme } from "react-native";
+import { Cell, Section } from "react-native-tableview-simple";
+import { useThemeContext } from "../../../contexts/ThemeContext";
 
-export function Settings() {
-  const { darkMode, setDarkMode } = useThemeContext();
+export function ThemeSettingsSection() {
+  const { setDarkMode } = useThemeContext();
   const [userDarkModeSwitch, setUserDarkModeSwitch] = useState();
   const [systemDarkModeSwitch, setSystemDarkModeSwitch] = useState(true);
   const systemDarkMode = useColorScheme() === "dark" ? true : false;
@@ -58,44 +57,29 @@ export function Settings() {
   }, []);
 
   return (
-    <View style={[styles.container, darkMode && styles.containerDark]}>
-      <ScrollView>
-        <TableView appearance={darkMode ? "dark" : "light"}>
-          <Section header="Theme">
-            <Cell
-              cellStyle="Basic"
-              title="Dark mode"
-              cellAccessoryView={
-                <Switch
-                  value={userDarkModeSwitch}
-                  onValueChange={toggleUserDarkModeSwitch}
-                  disabled={systemDarkModeSwitch}
-                />
-              }
-              isDisabled={systemDarkModeSwitch}
-            />
-            <Cell
-              cellStyle="Basic"
-              title="Use system theme"
-              cellAccessoryView={
-                <Switch
-                  value={systemDarkModeSwitch}
-                  onValueChange={toggleSystemDarkModeSwitch}
-                />
-              }
-            />
-          </Section>
-        </TableView>
-      </ScrollView>
-    </View>
+    <Section header="Theme">
+      <Cell
+        cellStyle="Basic"
+        title="Dark mode"
+        cellAccessoryView={
+          <Switch
+            value={userDarkModeSwitch}
+            onValueChange={toggleUserDarkModeSwitch}
+            disabled={systemDarkModeSwitch}
+          />
+        }
+        isDisabled={systemDarkModeSwitch}
+      />
+      <Cell
+        cellStyle="Basic"
+        title="Use system theme"
+        cellAccessoryView={
+          <Switch
+            value={systemDarkModeSwitch}
+            onValueChange={toggleSystemDarkModeSwitch}
+          />
+        }
+      />
+    </Section>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  containerDark: {
-    backgroundColor: "black",
-  },
-});

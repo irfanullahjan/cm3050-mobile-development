@@ -4,8 +4,9 @@ import { TextInput } from "../../components/TextInput";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import * as Yup from "yup";
+import { FormContainer } from "../../components/FormContainer";
 
-export function Login({ navigation }) {
+export function Login() {
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -25,7 +26,7 @@ export function Login({ navigation }) {
   });
 
   return (
-    <View>
+    <FormContainer>
       <FormikProvider value={formik}>
         <TextInput
           name="email"
@@ -47,7 +48,6 @@ export function Login({ navigation }) {
         />
         <Button onPress={formik.submitForm} title="Login" />
       </FormikProvider>
-      <Button title="Sign Up" onPress={() => navigation.navigate("SignUp")} />
-    </View>
+    </FormContainer>
   );
 }

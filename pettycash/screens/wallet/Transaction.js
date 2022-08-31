@@ -1,12 +1,13 @@
 import { FormikProvider, useFormik } from "formik";
 import { useEffect, useState } from "react";
-import { Alert, Button, View, StyleSheet } from "react-native";
-import { TextInput} from "../../components/TextInput";
+import { Alert, Button } from "react-native";
+import { TextInput } from "../../components/TextInput";
 import { auth, firestore } from "../../firebase";
 import * as Yup from "yup";
 import { LoadingScreen } from "../../components/LoadingScreen";
-import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { ButtonSelect } from "../../components/ButtonSelect";
+import { FormContainer } from "../../components/FormContainer";
 
 export function Transaction({ navigation, route }) {
   const { transactionId } = route?.params;
@@ -15,24 +16,26 @@ export function Transaction({ navigation, route }) {
 
   const formik = useFormik({
     initialValues: {
+      amount: "",
+      description: "",
       type: "EXPENSE",
     },
     onSubmit: (values) => {
       const path = ["users", auth.currentUser.uid, "transactions"];
-      let data;
+      let submitPromise;
       if (transactionId) {
         path.push(transactionId);
-        data = {
+        submitPromise = setDoc(doc(firestore, ...path), {
           ...values,
           updatedAt: new Date(),
-        };
+        });
       } else {
-        data = {
+        submitPromise = addDoc(collection(firestore, ...path), {
           ...values,
           createdAt: new Date(),
-        };
+        });
       }
-      setDoc(doc(firestore, ...path), data)
+      submitPromise
         .then(() => {
           navigation.navigate("Wallet");
         })
@@ -113,23 +116,12 @@ export function Transaction({ navigation, route }) {
   ];
 
   return (
-    <View style={styles.container}>
+    <FormContainer>
       <FormikProvider value={formik}>
         <TextInput name="description" placeholder="Description" />
-        <TextInput
-          name="amount"
-          placeholder="Amount"
-          keyboardType="numeric"
-        />
-        <ButtonSelect
-          name="type"
-          label="Type"
-          options={transactionTypes}
-        />
-        <Button
-          onPress={formik.submitForm}
-          title="Submit"
-        />
+        <TextInput name="amount" placeholder="Amount" keyboardType="numeric" />
+        <ButtonSelect name="type" label="Type" options={transactionTypes} />
+        <Button onPress={formik.submitForm} title="Submit" />
         {transactionId && (
           <Button
             onPress={() => confirmDelete(transactionId)}
@@ -138,12 +130,6 @@ export function Transaction({ navigation, route }) {
           />
         )}
       </FormikProvider>
-    </View>
+    </FormContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 15,
-  },
-});

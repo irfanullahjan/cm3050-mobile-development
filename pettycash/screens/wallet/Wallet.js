@@ -46,11 +46,13 @@ export function Wallet({ navigation }) {
     return total + (curr.type === "INCOME" ? +curr.amount : -curr.amount);
   }, 0);
 
+  const header = `You have ${userTransactions.length} transactions in the wallet`;
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
         <TableView appearance={darkMode ? "dark" : "light"}>
-          <Section>
+          <Section header={header}>
             {userTransactions.map((transaction) => (
               <Cell
                 key={transaction.id}

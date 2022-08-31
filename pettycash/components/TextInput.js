@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 export function TextInput({ name, placeholder, ...props }) {
-  const [field, meta, helpers] = useField({ name });
+  const [field, meta, helpers] = useField(name);
   const [focused, setFocused] = useState(false);
   const { colors } = useTheme();
 
@@ -28,7 +28,7 @@ export function TextInput({ name, placeholder, ...props }) {
         {...props}
         onChangeText={helpers.setValue}
         onBlur={() => {
-          field.onBlur(name);
+          helpers.setTouched(true);
           setFocused(false);
         }}
         onFocus={() => setFocused(true)}

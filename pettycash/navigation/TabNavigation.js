@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useAuthContext } from "../contexts/AuthContext";
-import { Settings } from "../screens/Settings";
+import { Settings } from "../screens/settings/Settings";
 import { UserStack } from "./UserStack";
 import { WalletStack } from "./WalletStack";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -33,13 +33,11 @@ export function TabNavigation() {
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         headerShown: false,
-        tabBarLabel: ({ focused, color }) => {
-          const label = route.name.replace(/Tab$/, "");
-          const style = focused ? { fontWeight: "bold" } : {};
-          style.fontSize = 11;
-          style.color = color;
-          return <Text style={style}>{label}</Text>
-        }
+        tabBarLabel: ({ color }) => (
+          <Text style={{ fontSize: 11, color }}>
+            {route.name.replace(/Tab$/, "")}
+          </Text>
+        ),
       })}
     >
       <Tab.Screen name="WalletTab" component={WalletStack} />
