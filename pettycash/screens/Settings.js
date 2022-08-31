@@ -7,8 +7,8 @@ import { useThemeContext } from "../contexts/ThemeContext";
 
 export function Settings() {
   const { darkMode, setDarkMode } = useThemeContext();
-  const [userDarkModeSwitch, setUserDarkModeSwitch] = useState(false);
-  const [systemDarkModeSwitch, setSystemDarkModeSwitch] = useState(false);
+  const [userDarkModeSwitch, setUserDarkModeSwitch] = useState();
+  const [systemDarkModeSwitch, setSystemDarkModeSwitch] = useState(true);
   const systemDarkMode = useColorScheme() === "dark" ? true : false;
 
   const toggleUserDarkModeSwitch = () => {
@@ -40,10 +40,12 @@ export function Settings() {
   };
 
   useEffect(() => {
-    if (!systemDarkModeSwitch) {
-      setDarkMode(userDarkModeSwitch);
-    } else {
-      setDarkMode(systemDarkMode);
+    if (systemDarkModeSwitch != null && userDarkModeSwitch != null) {
+      if (!systemDarkModeSwitch) {
+        setDarkMode(userDarkModeSwitch);
+      } else {
+        setDarkMode(systemDarkMode);
+      }
     }
   }, [userDarkModeSwitch, systemDarkModeSwitch]);
 
@@ -59,7 +61,7 @@ export function Settings() {
     <View style={[styles.container, darkMode && styles.containerDark]}>
       <ScrollView>
         <TableView appearance={darkMode ? "dark" : "light"}>
-          <Section>
+          <Section header="Theme">
             <Cell
               cellStyle="Basic"
               title="Dark mode"

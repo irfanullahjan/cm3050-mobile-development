@@ -11,7 +11,7 @@ export function ButtonSelect({ name, label, options }) {
     <>
       <Text style={[styles.label, {color: colors.text}]}>{label}</Text>
       <View style={styles.container}>
-        <View style={styles.buttons}>
+        <View style={[styles.buttons, {borderColor: colors.border}]}>
           {options.map((option) => (
             <Pressable
               key={option.value}
@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection: "row",
     borderWidth: 1,
-    borderColor: "gray",
     marginVertical: 5,
   },
   button: {

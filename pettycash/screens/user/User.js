@@ -35,11 +35,8 @@ export function User({ navigation }) {
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
-        <Text style={{ margin: 15, color: colors.text }}>
-          Currently logged in as {auth.currentUser.email}
-        </Text>
         <TableView appearance={darkMode ? "dark" : "light"}>
-          <Section>
+          <Section header={`Currently logged in as ${auth.currentUser.email}`}>
             <Cell
               cellStyle="Basic"
               title="Logout"
