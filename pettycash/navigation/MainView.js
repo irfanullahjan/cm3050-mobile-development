@@ -5,6 +5,7 @@ import {
 } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView, StyleSheet, View } from "react-native";
+
 import { useThemeContext } from "../contexts/ThemeContext";
 import { TabNavigation } from "./TabNavigation";
 
@@ -14,8 +15,7 @@ export function MainView() {
   return (
     <View style={styles.container}>
       <SafeAreaView
-        style={[styles.safeArea, darkMode && { backgroundColor: "black" }]}
-      >
+        style={[styles.safeArea, darkMode && { backgroundColor: "black" }]}>
         <NavigationContainer theme={darkMode ? DarkTheme : DefaultTheme}>
           <TabNavigation />
         </NavigationContainer>

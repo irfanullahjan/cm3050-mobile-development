@@ -1,10 +1,12 @@
-import { FormikProvider, useFormik } from "formik";
-import { Alert, Button } from "react-native";
-import { TextInput } from "../../components/TextInput";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { FormikProvider, useFormik } from "formik";
+import { Button } from "react-native";
 import * as Yup from "yup";
-import { auth } from "../../firebase";
+
 import { FormContainer } from "../../components/FormContainer";
+import { TextInput } from "../../components/TextInput";
+import { auth } from "../../firebase";
+import { alert } from "../../utils/alert";
 
 export function SignUp({ navigation }) {
   const formik = useFormik({
@@ -19,7 +21,7 @@ export function SignUp({ navigation }) {
           navigation.navigate("Login");
         })
         .catch((error) => {
-          Alert.alert(
+          alert(
             "Error signing up, please try again perhaps with a different email address"
           );
           console.error(error);
@@ -53,7 +55,7 @@ export function SignUp({ navigation }) {
           autoCapitalize="none"
           autoCompleteType="password"
           autoCorrect={false}
-          secureTextEntry={true}
+          secureTextEntry
         />
         <TextInput
           name="confirmPassword"
@@ -62,7 +64,7 @@ export function SignUp({ navigation }) {
           autoCapitalize="none"
           autoCompleteType="password"
           autoCorrect={false}
-          secureTextEntry={true}
+          secureTextEntry
         />
         <Button onPress={formik.submitForm} title="Sign Up" />
       </FormikProvider>

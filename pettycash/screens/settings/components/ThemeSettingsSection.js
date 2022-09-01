@@ -1,14 +1,17 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Switch, useColorScheme } from "react-native";
 import { Cell, Section } from "react-native-tableview-simple";
+
 import { useThemeContext } from "../../../contexts/ThemeContext";
 
 export function ThemeSettingsSection() {
+  const { t } = useTranslation("settings");
   const { setDarkMode } = useThemeContext();
   const [userDarkModeSwitch, setUserDarkModeSwitch] = useState();
   const [systemDarkModeSwitch, setSystemDarkModeSwitch] = useState(true);
-  const systemDarkMode = useColorScheme() === "dark" ? true : false;
+  const systemDarkMode = useColorScheme() === "dark";
 
   const toggleUserDarkModeSwitch = () => {
     setUserDarkModeSwitch((previous) => {
@@ -57,10 +60,10 @@ export function ThemeSettingsSection() {
   }, []);
 
   return (
-    <Section header="Theme">
+    <Section header={t("settings:theme")}>
       <Cell
         cellStyle="Basic"
-        title="Dark mode"
+        title={t("settings:darkModeSwitch")}
         cellAccessoryView={
           <Switch
             value={userDarkModeSwitch}
@@ -72,7 +75,7 @@ export function ThemeSettingsSection() {
       />
       <Cell
         cellStyle="Basic"
-        title="Use system theme"
+        title={t("settings:systemThemeSwitch")}
         cellAccessoryView={
           <Switch
             value={systemDarkModeSwitch}

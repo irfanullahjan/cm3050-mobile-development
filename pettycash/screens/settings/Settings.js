@@ -1,6 +1,8 @@
 import { ScrollView, StyleSheet, View } from "react-native";
 import { TableView } from "react-native-tableview-simple";
+
 import { useThemeContext } from "../../contexts/ThemeContext";
+import { LanguageSettingsSection } from "./components/LanguageSettingsSection";
 import { ThemeSettingsSection } from "./components/ThemeSettingsSection";
 
 export function Settings() {
@@ -10,6 +12,7 @@ export function Settings() {
       <ScrollView>
         <TableView appearance={darkMode ? "dark" : "light"}>
           <ThemeSettingsSection />
+          <LanguageSettingsSection />
         </TableView>
       </ScrollView>
     </View>

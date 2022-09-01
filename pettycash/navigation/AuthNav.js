@@ -1,9 +1,10 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { SignUp } from "../screens/auth/Signup";
-import { Login } from "../screens/auth/Login";
-import { useAuthContext } from "../contexts/AuthContext";
-import { LoadingScreen } from "../components/LoadingScreen";
 import { Button } from "react-native";
+
+import { LoadingScreen } from "../components/LoadingScreen";
+import { useAuthContext } from "../contexts/AuthContext";
+import { Login } from "../screens/auth/Login";
+import { SignUp } from "../screens/auth/Signup";
 
 export function AuthNav() {
   const Stack = createStackNavigator();

@@ -3,7 +3,7 @@ import { useField } from "formik";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 export function ButtonSelect({ name, label, options }) {
-  const [field, meta, helpers] = useField(name);
+  const [field, , helpers] = useField(name);
 
   const { colors } = useTheme();
 
@@ -15,16 +15,14 @@ export function ButtonSelect({ name, label, options }) {
           {options.map((option) => (
             <Pressable
               key={option.value}
-              onPress={() => helpers.setValue(option.value)}
-            >
+              onPress={() => helpers.setValue(option.value)}>
               <View
                 style={[
                   field.value === option.value && {
                     backgroundColor: colors.border,
                   },
                   styles.button,
-                ]}
-              >
+                ]}>
                 <Text style={{ color: colors.text }}>{option.label}</Text>
               </View>
             </Pressable>

@@ -1,10 +1,3 @@
-import { FormikProvider, useFormik } from "formik";
-import { useEffect, useState } from "react";
-import { Alert, Button } from "react-native";
-import { TextInput } from "../../components/TextInput";
-import { auth, firestore } from "../../firebase";
-import * as Yup from "yup";
-import { LoadingScreen } from "../../components/LoadingScreen";
 import {
   addDoc,
   collection,
@@ -13,8 +6,16 @@ import {
   getDoc,
   setDoc,
 } from "firebase/firestore";
+import { FormikProvider, useFormik } from "formik";
+import { useEffect, useState } from "react";
+import { Alert, Button } from "react-native";
+import * as Yup from "yup";
+
 import { ButtonSelect } from "../../components/ButtonSelect";
 import { FormContainer } from "../../components/FormContainer";
+import { LoadingScreen } from "../../components/LoadingScreen";
+import { TextInput } from "../../components/TextInput";
+import { auth, firestore } from "../../firebase";
 
 export function Transaction({ navigation, route }) {
   const { transactionId } = route?.params;
@@ -134,7 +135,7 @@ export function Transaction({ navigation, route }) {
           <Button
             onPress={() => confirmDelete(transactionId)}
             title="Delete"
-            color={"red"}
+            color="red"
           />
         )}
       </FormikProvider>

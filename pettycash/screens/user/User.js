@@ -1,13 +1,16 @@
 import { signOut } from "firebase/auth";
-import { Alert, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Cell, Section, TableView } from "react-native-tableview-simple";
+
 import { useThemeContext } from "../../contexts/ThemeContext";
 import { auth } from "../../firebase";
+import { alert } from "../../utils/alert";
+import { confirm } from "../../utils/confirm";
 
 export function User({ navigation }) {
   const { darkMode } = useThemeContext();
   const confirmLogout = () => {
-    Alert.alert(
+    confirm(
       "Logout",
       "Are you sure you want to logout?",
       [
@@ -17,7 +20,8 @@ export function User({ navigation }) {
         },
         {
           text: "Logout",
-          onPress: () => logout(),
+          style: "destructive",
+          onPress: logout,
         },
       ],
       { cancelable: false }
@@ -26,6 +30,7 @@ export function User({ navigation }) {
 
   const logout = () => {
     signOut(auth).catch((error) => {
+      alert("Failed to logout");
       console.error(error);
     });
   };

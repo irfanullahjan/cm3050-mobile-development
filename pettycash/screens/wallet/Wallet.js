@@ -2,6 +2,7 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Button, ScrollView, Text, View } from "react-native";
 import { Cell, Section, TableView } from "react-native-tableview-simple";
+
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useThemeContext } from "../../contexts/ThemeContext";
