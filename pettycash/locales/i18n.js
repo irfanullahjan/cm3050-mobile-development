@@ -7,8 +7,8 @@ import { resources } from "./locales";
 export const languages = ["en", "fr", "es"];
 
 i18n
-  .use(initReactI18next)
   .use(RNLanguageDetector)
+  .use(initReactI18next)
   .init({
     resources,
     supportedLngs: languages,
