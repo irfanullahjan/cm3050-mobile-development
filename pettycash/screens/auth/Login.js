@@ -5,6 +5,7 @@ import { Button } from "react-native";
 import * as Yup from "yup";
 
 import { FormContainer } from "../../components/FormContainer";
+import { LoadingScreen } from "../../components/LoadingScreen";
 import { TextInput } from "../../components/TextInput";
 import { auth } from "../../firebase";
 import { alert } from "../../utils/alert";
@@ -30,12 +31,16 @@ export function Login() {
     }),
   });
 
+  if (formik.isSubmitting) {
+    return <LoadingScreen />;
+  }
+
   return (
     <FormContainer>
       <FormikProvider value={formik}>
         <TextInput
           name="email"
-          placeholder={t("email")}
+          label={t("email")}
           textContentType="emailAddress"
           autoCapitalize="none"
           autoCompleteType="email"
@@ -44,7 +49,7 @@ export function Login() {
         />
         <TextInput
           name="password"
-          placeholder={t("password")}
+          label={t("password")}
           textContentType="password"
           autoCapitalize="none"
           autoCompleteType="password"

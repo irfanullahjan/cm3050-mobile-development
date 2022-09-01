@@ -8,14 +8,14 @@ import {
   View,
 } from "react-native";
 
-export function TextInput({ name, placeholder, ...props }) {
+export function TextInput({ name, label, ...props }) {
   const [field, meta, helpers] = useField(name);
   const [focused, setFocused] = useState(false);
   const { colors } = useTheme();
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.label, { color: colors.text }]}>{placeholder}</Text>
+      <Text style={[styles.label, { color: colors.text }]}>{label}</Text>
       <TextInputReactNative
         style={[
           styles.input,

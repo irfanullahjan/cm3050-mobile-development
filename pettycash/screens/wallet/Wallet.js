@@ -1,13 +1,13 @@
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, ScrollView, Text, View } from "react-native";
+import { Button, ScrollView, View } from "react-native";
 import { Cell, Section, TableView } from "react-native-tableview-simple";
 
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useThemeContext } from "../../contexts/ThemeContext";
-import { auth, firestore } from "../../firebase";
+import { firestore } from "../../firebase";
 
 export function Wallet({ navigation }) {
   const { t } = useTranslation("wallet");
@@ -32,14 +32,6 @@ export function Wallet({ navigation }) {
       );
     }
   }, [user]);
-
-  if (!auth.currentUser) {
-    return (
-      <View>
-        <Text>No user logged in</Text>
-      </View>
-    );
-  }
 
   if (!userTransactions) {
     return <LoadingScreen />;

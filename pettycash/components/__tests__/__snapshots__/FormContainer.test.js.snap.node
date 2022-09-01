@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormContainer renders correctly 1`] = `
+<div
+  className="css-view-175oi2r r-padding-1oqcu8e"
+  dir={null}
+/>
+`;

@@ -83,17 +83,20 @@ export function Transaction({ navigation, route }) {
     }
   }, [transactionId]);
 
-  if (loading) {
+  if (loading || formik.isSubmitting) {
     return <LoadingScreen />;
   }
 
   const deleteTransaction = (id) => {
+    setLoading(true);
     deleteDoc(doc(firestore, "users", auth.currentUser.uid, "transactions", id))
       .then(() => {
+        setLoading(false);
         navigation.navigate("Wallet");
       })
       .catch((error) => {
-        console.error("Error removing document: ", error);
+        setLoading(false);
+        console.error(error);
       });
   };
 
@@ -132,11 +135,11 @@ export function Transaction({ navigation, route }) {
       <FormikProvider value={formik}>
         <TextInput
           name="description"
-          placeholder={t("transactionForm.description")}
+          label={t("transactionForm.description")}
         />
         <TextInput
           name="amount"
-          placeholder={t("transactionForm.amount")}
+          label={t("transactionForm.amount")}
           keyboardType="numeric"
         />
         <ButtonSelect
