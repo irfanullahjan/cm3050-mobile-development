@@ -9,10 +9,16 @@ export function LanguageSettingsSection() {
   const { t } = useTranslation(["settings", "translation"]);
   const [selectedLanguage, setSelectedLanguage] = useState();
 
+  console.log("LanguageSettingsSection", i18n.language);
+
   useEffect(() => {
     AsyncStorage.getItem("language")
       .then((value) => {
-        setSelectedLanguage(value);
+        if (value) {
+          setSelectedLanguage(value);
+        } else {
+          setSelectedLanguage(i18n.language);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -21,7 +27,11 @@ export function LanguageSettingsSection() {
 
   const toggleLanguage = (language) => {
     setSelectedLanguage(language);
-    AsyncStorage.setItem("language", language);
+    if (language === i18n.language) {
+      AsyncStorage.removeItem("language");
+    } else {
+      AsyncStorage.setItem("language", language);
+    }
     i18n.changeLanguage(language);
   };
 
