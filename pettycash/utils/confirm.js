@@ -1,3 +1,5 @@
+// Adopted from https://github.com/necolas/react-native-web/issues/1026#issuecomment-679102691
+
 import { Alert, Platform } from "react-native";
 
 const alertPolyfill = (title, description, options, extra) => {
@@ -7,10 +9,10 @@ const alertPolyfill = (title, description, options, extra) => {
 
   if (result) {
     const confirmOption = options.find(({ style }) => style !== "cancel");
-    confirmOption && confirmOption.onPress?.();
+    confirmOption?.onPress?.();
   } else {
     const cancelOption = options.find(({ style }) => style === "cancel");
-    cancelOption && cancelOption.onPress?.();
+    cancelOption?.onPress?.();
   }
 };
 

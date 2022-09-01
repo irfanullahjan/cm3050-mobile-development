@@ -1,4 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
+import { useTranslation } from "react-i18next";
 import { Button } from "react-native";
 
 import { LoadingScreen } from "../components/LoadingScreen";
@@ -7,6 +8,7 @@ import { Login } from "../screens/auth/Login";
 import { SignUp } from "../screens/auth/Signup";
 
 export function AuthNav() {
+  const { t } = useTranslation("navigation");
   const Stack = createStackNavigator();
   const { user } = useAuthContext();
 
@@ -21,15 +23,22 @@ export function AuthNav() {
         name="Login"
         component={Login}
         options={({ navigation }) => ({
+          headerTitle: t("login"),
           headerRight: () => (
             <Button
-              title="Signup"
+              title={t("signup")}
               onPress={() => navigation.navigate("Signup")}
             />
           ),
         })}
       />
-      <Stack.Screen name="Signup" component={SignUp} />
+      <Stack.Screen
+        name="Signup"
+        component={SignUp}
+        options={{
+          headerTitle: t("signup"),
+        }}
+      />
     </Stack.Navigator>
   );
 }

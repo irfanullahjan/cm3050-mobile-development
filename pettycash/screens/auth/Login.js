@@ -10,7 +10,7 @@ import { auth } from "../../firebase";
 import { alert } from "../../utils/alert";
 
 export function Login() {
-  const { t } = useTranslation("translation");
+  const { t } = useTranslation("auth");
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -18,13 +18,15 @@ export function Login() {
     },
     onSubmit: ({ email, password }) => {
       signInWithEmailAndPassword(auth, email, password).catch((error) => {
-        alert("Error logging in");
+        alert(t("error.login"));
         console.error(error);
       });
     },
     validationSchema: Yup.object().shape({
-      email: Yup.string().email("Invalid email address").required("Required"),
-      password: Yup.string().required("Required"),
+      email: Yup.string()
+        .email(t("translation:validation.email"))
+        .required(t("translation:validation.required")),
+      password: Yup.string().required(t("translation:validation.required")),
     }),
   });
 
@@ -33,7 +35,7 @@ export function Login() {
       <FormikProvider value={formik}>
         <TextInput
           name="email"
-          placeholder="Email"
+          placeholder={t("email")}
           textContentType="emailAddress"
           autoCapitalize="none"
           autoCompleteType="email"
@@ -42,14 +44,14 @@ export function Login() {
         />
         <TextInput
           name="password"
-          placeholder="Password"
+          placeholder={t("password")}
           textContentType="password"
           autoCapitalize="none"
           autoCompleteType="password"
           autoCorrect={false}
           secureTextEntry
         />
-        <Button onPress={formik.submitForm} title={t("login")} />
+        <Button onPress={formik.submitForm} title={t("buttons.submit")} />
       </FormikProvider>
     </FormContainer>
   );

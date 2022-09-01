@@ -8,6 +8,7 @@ import {
 } from "firebase/firestore";
 import { FormikProvider, useFormik } from "formik";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, Button } from "react-native";
 import * as Yup from "yup";
 
@@ -18,6 +19,7 @@ import { TextInput } from "../../components/TextInput";
 import { auth, firestore } from "../../firebase";
 
 export function Transaction({ navigation, route }) {
+  const { t } = useTranslation("wallet");
   const { transactionId } = route?.params;
 
   const [loading, setLoading] = useState(false);
@@ -52,11 +54,11 @@ export function Transaction({ navigation, route }) {
         });
     },
     validationSchema: Yup.object().shape({
-      description: Yup.string().required("Required"),
+      description: Yup.string().required(t("translation:validation.required")),
       amount: Yup.number()
-        .typeError("Not a valid number")
-        .positive("Must be positive")
-        .required("Required"),
+        .typeError(t("translation:validation.mustBeNumber"))
+        .positive(t("translation:validation.mustBePositive"))
+        .required(t("translation:validation.required")),
     }),
   });
 
@@ -97,15 +99,16 @@ export function Transaction({ navigation, route }) {
 
   const confirmDelete = (id) => {
     Alert.alert(
-      "Delete Transaction",
-      "Are you sure you want to delete this transaction?",
+      t("deleteDialog.title"),
+      t("deleteDialog.message"),
       [
         {
-          text: "Cancel",
+          text: t("deleteDialog.cancel"),
           style: "cancel",
         },
         {
-          text: "Delete",
+          text: t("deleteDialog.delete"),
+          style: "destructive",
           onPress: () => deleteTransaction(id),
         },
       ],
@@ -115,11 +118,11 @@ export function Transaction({ navigation, route }) {
 
   const transactionTypes = [
     {
-      label: "Income",
+      label: t("transactionForm.types.expense"),
       value: "INCOME",
     },
     {
-      label: "Expense",
+      label: t("transactionForm.types.income"),
       value: "EXPENSE",
     },
   ];
@@ -127,14 +130,28 @@ export function Transaction({ navigation, route }) {
   return (
     <FormContainer>
       <FormikProvider value={formik}>
-        <TextInput name="description" placeholder="Description" />
-        <TextInput name="amount" placeholder="Amount" keyboardType="numeric" />
-        <ButtonSelect name="type" label="Type" options={transactionTypes} />
-        <Button onPress={formik.submitForm} title="Submit" />
+        <TextInput
+          name="description"
+          placeholder={t("transactionForm.description")}
+        />
+        <TextInput
+          name="amount"
+          placeholder={t("transactionForm.amount")}
+          keyboardType="numeric"
+        />
+        <ButtonSelect
+          name="type"
+          label={t("transactionForm.type")}
+          options={transactionTypes}
+        />
+        <Button
+          onPress={formik.submitForm}
+          title={t("transactionForm.submit")}
+        />
         {transactionId && (
           <Button
             onPress={() => confirmDelete(transactionId)}
-            title="Delete"
+            title={t("transactionForm.delete")}
             color="red"
           />
         )}

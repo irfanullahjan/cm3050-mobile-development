@@ -1,5 +1,6 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { FormikProvider, useFormik } from "formik";
+import { useTranslation } from "react-i18next";
 import { Button } from "react-native";
 import * as Yup from "yup";
 
@@ -9,6 +10,7 @@ import { auth } from "../../firebase";
 import { alert } from "../../utils/alert";
 
 export function SignUp({ navigation }) {
+  const { t } = useTranslation("auth");
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -28,11 +30,13 @@ export function SignUp({ navigation }) {
         });
     },
     validationSchema: Yup.object().shape({
-      email: Yup.string().email("Invalid email address").required("Required"),
-      password: Yup.string().required("Required"),
+      email: Yup.string()
+        .email(t("translation:validation.email"))
+        .required(t("translation:validation.required")),
+      password: Yup.string().required(t("translation:validation.required")),
       confirmPassword: Yup.string()
-        .required("Required")
-        .oneOf([Yup.ref("password"), null], "Passwords must match"),
+        .required(t("translation:validation.required"))
+        .oneOf([Yup.ref("password"), null], t("validation.confirmPassword")),
     }),
   });
 
@@ -41,7 +45,7 @@ export function SignUp({ navigation }) {
       <FormikProvider value={formik}>
         <TextInput
           name="email"
-          placeholder="Email"
+          placeholder={t("email")}
           textContentType="emailAddress"
           autoCapitalize="none"
           autoCompleteType="email"
@@ -50,7 +54,7 @@ export function SignUp({ navigation }) {
         />
         <TextInput
           name="password"
-          placeholder="Password"
+          placeholder={t("password")}
           textContentType="password"
           autoCapitalize="none"
           autoCompleteType="password"
@@ -59,14 +63,14 @@ export function SignUp({ navigation }) {
         />
         <TextInput
           name="confirmPassword"
-          placeholder="Confirm Password"
+          placeholder={t("confirmPassword")}
           textContentType="password"
           autoCapitalize="none"
           autoCompleteType="password"
           autoCorrect={false}
           secureTextEntry
         />
-        <Button onPress={formik.submitForm} title="Sign Up" />
+        <Button onPress={formik.submitForm} title={t("buttons.submit")} />
       </FormikProvider>
     </FormContainer>
   );

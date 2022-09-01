@@ -1,5 +1,6 @@
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button, ScrollView, Text, View } from "react-native";
 import { Cell, Section, TableView } from "react-native-tableview-simple";
 
@@ -9,6 +10,7 @@ import { useThemeContext } from "../../contexts/ThemeContext";
 import { auth, firestore } from "../../firebase";
 
 export function Wallet({ navigation }) {
+  const { t } = useTranslation("wallet");
   const { user } = useAuthContext();
   const { darkMode } = useThemeContext();
   const [userTransactions, setUserTransactions] = useState(null);
@@ -47,13 +49,14 @@ export function Wallet({ navigation }) {
     return total + (curr.type === "INCOME" ? +curr.amount : -curr.amount);
   }, 0);
 
-  const header = `You have ${userTransactions.length} transactions in the wallet`;
-
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
         <TableView appearance={darkMode ? "dark" : "light"}>
-          <Section header={header}>
+          <Section
+            header={t("youHaveXTransactions", {
+              count: userTransactions.length,
+            })}>
             {userTransactions.map((transaction) => (
               <Cell
                 key={transaction.id}
