@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ButtonSelect renders correctly 1`] = `
+exports[`ButtonSelect renders 1`] = `
 Array [
   <Text
     style={
@@ -70,6 +70,41 @@ Array [
             }
           >
             test
+          </Text>
+        </View>
+      </View>
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            Array [
+              false,
+              Object {
+                "padding": 10,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "rgb(28, 28, 30)",
+              }
+            }
+          >
+            test2
           </Text>
         </View>
       </View>
