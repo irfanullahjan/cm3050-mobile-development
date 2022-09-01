@@ -45,7 +45,7 @@
   },
   "private": true,
   "jest": {
-    "preset": "jest-expo/universal",
+    "preset": "jest-expo",
     "collectCoverage": true,
     "collectCoverageFrom": [
       "**/*.{js,jsx}",
