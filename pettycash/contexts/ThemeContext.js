@@ -29,7 +29,7 @@ export function ThemeContextProvider({ children }) {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   }, []);
 
@@ -46,7 +46,7 @@ export function ThemeContextProvider({ children }) {
             setTheme(theme);
           })
           .catch((error) => {
-            console.log(error);
+            console.error(error);
           });
       },
     }),

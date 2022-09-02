@@ -57,8 +57,9 @@ The following points outline the feedback I received:
 - Some users wanted the ability to delete their account.
 - The theme settings are confusing, it would be a lot simpler to have three options instead of two toggles: light, dark, and system.
 - Some users requested the ability to manage multiple wallets.
-- Users pointed out that the app doesn't indicate the type of currency.
+- Users pointed out that the app doesn't indicate whether a transaction is a debit or credit.
 - There are some missing translations e.g. in the alerts displayed to the user.
+- The app could use a bit more work on look and feel especially that it lacks icons e.g. in settings menu.
 
 I fixed some of these issues, however I didn't have enough time in the end to implement e.g. theme settings improvement, ability to reset password, and ability to delete account.
 

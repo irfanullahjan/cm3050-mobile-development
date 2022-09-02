@@ -13,7 +13,7 @@ export default function App() {
   useEffect(() => {
     AsyncStorage.getItem("language")
       .then((value) => value && i18next.changeLanguage(value))
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   }, []);
 
   return (

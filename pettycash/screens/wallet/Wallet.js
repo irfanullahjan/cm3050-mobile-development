@@ -41,6 +41,11 @@ export function Wallet({ navigation }) {
     return total + (curr.type === "INCOME" ? +curr.amount : -curr.amount);
   }, 0);
 
+  const numberColors = {
+    GREEN: "#50C878",
+    RED: "#FF5733",
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
@@ -61,6 +66,12 @@ export function Wallet({ navigation }) {
                   })
                 }
                 accessory="DisclosureIndicator"
+                detailTextStyle={{
+                  color:
+                    transaction.type === "INCOME"
+                      ? numberColors.GREEN
+                      : numberColors.RED,
+                }}
               />
             ))}
           </Section>
@@ -69,6 +80,9 @@ export function Wallet({ navigation }) {
               cellStyle="RightDetail"
               title="Balance"
               detail={total.toLocaleString()}
+              detailTextStyle={{
+                color: total >= 0 ? numberColors.GREEN : numberColors.RED,
+              }}
             />
           </Section>
         </TableView>

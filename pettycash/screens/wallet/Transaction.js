@@ -122,11 +122,11 @@ export function Transaction({ navigation, route }) {
 
   const transactionTypes = [
     {
-      label: t("transactionForm.types.expense"),
+      label: t("transactionForm.types.income"),
       value: "INCOME",
     },
     {
-      label: t("transactionForm.types.income"),
+      label: t("transactionForm.types.expense"),
       value: "EXPENSE",
     },
   ];
