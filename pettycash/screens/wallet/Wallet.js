@@ -6,7 +6,7 @@ import { Cell, Section, TableView } from "react-native-tableview-simple";
 
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { useAuthContext } from "../../contexts/AuthContext";
-import { useThemeContext } from "../../contexts/ThemeContext";
+import { themeTypes, useThemeContext } from "../../contexts/ThemeContext";
 import { firestore } from "../../firebase";
 
 export function Wallet({ navigation }) {
@@ -44,7 +44,7 @@ export function Wallet({ navigation }) {
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
-        <TableView appearance={darkMode ? "dark" : "light"}>
+        <TableView appearance={darkMode ? themeTypes.DARK : themeTypes.LIGHT}>
           <Section
             header={t("youHaveXTransactions", {
               count: userTransactions.length,

@@ -6,7 +6,7 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 
-import { useThemeContext } from "../contexts/ThemeContext";
+import { themeTypes, useThemeContext } from "../contexts/ThemeContext";
 import { TabNavigation } from "./TabNavigation";
 
 export function MainView() {
@@ -23,7 +23,7 @@ export function MainView() {
           <TabNavigation />
         </NavigationContainer>
       </SafeAreaView>
-      <StatusBar style={darkMode ? "light" : "dark"} />
+      <StatusBar style={darkMode ? themeTypes.LIGHT : themeTypes.DARK} />
     </View>
   );
 }

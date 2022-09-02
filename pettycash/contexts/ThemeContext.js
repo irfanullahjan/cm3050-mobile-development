@@ -8,16 +8,24 @@ export const useThemeContext = () => useContext(ThemeContext);
 
 export const themes = ["system", "light", "dark"];
 
+export const themeTypes = {
+  SYSTEM: themes[0],
+  LIGHT: themes[1],
+  DARK: themes[2],
+};
+
+const THEME_STORAGE_KEY = "theme";
+
 export function ThemeContextProvider({ children }) {
   const [theme, setTheme] = useState(null);
 
   useEffect(() => {
-    AsyncStorage.getItem("theme")
+    AsyncStorage.getItem(THEME_STORAGE_KEY)
       .then((theme) => {
         if (theme) {
           setTheme(theme);
         } else {
-          setTheme("system");
+          setTheme(themeTypes.SYSTEM);
         }
       })
       .catch((error) => {
@@ -25,22 +33,15 @@ export function ThemeContextProvider({ children }) {
       });
   }, []);
 
-  const isSystemDarkMode = useColorScheme() === "dark";
-
-  const darkMode = useMemo(() => {
-    if (theme === "system") {
-      return isSystemDarkMode;
-    } else {
-      return theme === "dark";
-    }
-  }, [theme]);
+  const isSystemDark = useColorScheme() === themeTypes.DARK;
 
   const value = useMemo(
     () => ({
-      darkMode,
+      darkMode:
+        theme === themeTypes.SYSTEM ? isSystemDark : theme === themeTypes.DARK,
       theme,
       setTheme: (theme) => {
-        AsyncStorage.setItem("theme", theme)
+        AsyncStorage.setItem(THEME_STORAGE_KEY, theme)
           .then(() => {
             setTheme(theme);
           })
@@ -49,7 +50,7 @@ export function ThemeContextProvider({ children }) {
           });
       },
     }),
-    [theme, darkMode]
+    [theme, isSystemDark]
   );
 
   return (
