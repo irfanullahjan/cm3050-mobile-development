@@ -1,6 +1,7 @@
 export const wallet = {
   en: {
     youHaveXTransactions: "You have {{count}} transactions in wallet",
+    addTransaction: "Add transaction",
     transactionForm: {
       description: "Description",
       amount: "Amount",
@@ -22,6 +23,7 @@ export const wallet = {
   fr: {
     youHaveXTransactions:
       "Vous avez {{count}} transactions dans le portefeuille",
+    addTransaction: "Ajouter une transaction",
     transactionForm: {
       description: "La description",
       amount: "Montant",
@@ -42,6 +44,7 @@ export const wallet = {
   },
   es: {
     youHaveXTransactions: "Tienes {{count}} transacciones en la billetera",
+    addTransaction: "Añadir transacción",
     transactionForm: {
       description: "Descripción",
       amount: "Cantidad",

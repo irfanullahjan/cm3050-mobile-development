@@ -7,6 +7,7 @@ export const navigation = {
     transaction: "Transaction",
     user: "User",
     userDetail: "User detail",
+    back: "Back",
   },
   fr: {
     login: "Connexion",
@@ -16,6 +17,7 @@ export const navigation = {
     transaction: "Transaction",
     user: "Utilisateur",
     userDetail: "Détails de l'utilisateur",
+    back: "Retour",
   },
   es: {
     login: "Iniciar sesión",
@@ -25,5 +27,6 @@ export const navigation = {
     transaction: "Transacción",
     user: "Usuario",
     userDetail: "Detalles del usuario",
+    back: "Espalda",
   },
 };

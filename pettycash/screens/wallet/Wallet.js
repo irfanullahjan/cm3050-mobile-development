@@ -73,7 +73,7 @@ export function Wallet({ navigation }) {
           </Section>
         </TableView>
         <Button
-          title="Add Transaction"
+          title={t("addTransaction")}
           onPress={() => navigation.navigate("Transaction", {})}
         />
       </ScrollView>

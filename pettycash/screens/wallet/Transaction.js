@@ -77,6 +77,7 @@ export function Transaction({ navigation, route }) {
           }
         })
         .catch((error) => {
+          formik.setSubmitting(false);
           setLoading(false);
           console.error(error);
         });

@@ -24,6 +24,7 @@ export function SignUp({ navigation }) {
           navigation.navigate("Login");
         })
         .catch((error) => {
+          formik.setSubmitting(false);
           alert(
             "Error signing up, please try again perhaps with a different email address"
           );

@@ -7,7 +7,10 @@ export function SettingsStack() {
   const { t } = useTranslation("navigation");
   const Stack = createStackNavigator();
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerTruncatedBackTitle: t("back"),
+      }}>
       <Stack.Screen
         name="Settings"
         component={Settings}

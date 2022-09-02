@@ -1,6 +1,6 @@
+import { render } from "@testing-library/react-native";
 import { useField } from "formik";
 import React from "react";
-import { render } from "react-native-testing-library";
 
 import { TextInput } from "../TextInput";
 

@@ -19,6 +19,7 @@ export function Login() {
     },
     onSubmit: ({ email, password }) => {
       signInWithEmailAndPassword(auth, email, password).catch((error) => {
+        formik.setSubmitting(false);
         alert(t("error.login"));
         console.error(error);
       });

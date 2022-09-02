@@ -54,8 +54,8 @@ export function ThemeSettingsSection() {
   useEffect(() => {
     AsyncStorage.getItem("settings").then((value) => {
       const settings = JSON.parse(value);
-      setSystemDarkModeSwitch(settings.systemDarkModeSwitch);
-      setUserDarkModeSwitch(settings.userDarkModeSwitch);
+      setSystemDarkModeSwitch(settings?.systemDarkModeSwitch);
+      setUserDarkModeSwitch(settings?.userDarkModeSwitch);
     });
   }, []);
 

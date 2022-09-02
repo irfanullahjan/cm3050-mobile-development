@@ -8,7 +8,10 @@ export function UserStack() {
   const { t } = useTranslation("navigation");
   const Stack = createStackNavigator();
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerTruncatedBackTitle: t("back"),
+      }}>
       <Stack.Screen
         name="User"
         component={User}
