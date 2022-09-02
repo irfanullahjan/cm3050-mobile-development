@@ -58,6 +58,7 @@ The following points outline the feedback I received:
 - The theme settings are confusing, it would be a lot simpler to have three options instead of two toggles: light, dark, and system.
 - Some users requested the ability to manage multiple wallets.
 - Users pointed out that the app doesn't indicate the type of currency.
+- There are some missing translations e.g. in the alerts displayed to the user.
 
 I fixed some of these issues, however I didn't have enough time in the end to implement e.g. theme settings improvement, ability to reset password, and ability to delete account.
 
@@ -102,7 +103,7 @@ service cloud.firestore {
 }
 ```
 
-While I really wanted to implement more features and improvements based on user feedback, I had not enough time to do so. Therefore, I decided to spend the remaining time on testing and polishing the existing features.
+While I really wanted to implement more features and improvements based on user feedback, I did not have enough time to do so. Therefore, I decided to spend the remaining time on testing and polishing the existing features.
 
 ## Testing
 
@@ -117,4 +118,4 @@ I unfortunately didn't have enough time to improve test coverage because some of
 
 ## Known issues
 
-- Dark mode does not work on some older iPhones such as iPhone 6s.
+- There is a bug where sometimes the app doesn't immediately switch to dark mode upon tapping the toggle in settings. This issue can be reproduced on older iPhones such as iPhone 6s. I couldn't reproduce this on iPhone 13.

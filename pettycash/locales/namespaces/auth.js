@@ -6,12 +6,13 @@ export const auth = {
     email: "Email",
     password: "Password",
     confirmPassword: "Confirm password",
-    error: {
-      login: "Error logging in",
-      signup: "Error signing up",
-    },
     validation: {
       confirmPassword: "Passwords do not match",
+    },
+    alerts: {
+      cannotSignUp:
+        "Error signing up, please try again perhaps with a different email address",
+      cannotLogin: "Error logging in, please try again",
     },
   },
   fr: {
@@ -21,12 +22,13 @@ export const auth = {
     email: "Email",
     password: "Mot de passe",
     confirmPassword: "Confirmer le mot de passe",
-    error: {
-      login: "Erreur de connexion",
-      signup: "Erreur d'inscription",
-    },
     validation: {
       confirmPassword: "Les mots de passe ne correspondent pas",
+    },
+    alerts: {
+      cannotSignUp:
+        "Erreur lors de l'inscription, veuillez réessayer peut-être avec une adresse e-mail différente",
+      cannotLogin: "Erreur de connexion, veuillez réessayer",
     },
   },
   es: {
@@ -36,12 +38,13 @@ export const auth = {
     email: "Email",
     password: "Contraseña",
     confirmPassword: "Confirmar contraseña",
-    error: {
-      login: "Error al iniciar sesión",
-      signup: "Error al registrarse",
-    },
     validation: {
       confirmPassword: "Las contraseñas no coinciden",
+    },
+    alerts: {
+      cannotSignUp:
+        "Error al registrarse, intente nuevamente, tal vez con una dirección de correo electrónico diferente",
+      cannotLogin: "Error al iniciar sesión, intente nuevamente",
     },
   },
 };
