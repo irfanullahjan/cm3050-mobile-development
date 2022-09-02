@@ -32,7 +32,7 @@ export function LanguageSettingsSection() {
                   ? require("../../../assets/settings/language-fr.png")
                   : require("../../../assets/settings/language-es.png")
               }
-              style={{ width: "70%" }}
+              style={{ transform: [{ scale: 0.8 }] }}
             />
           }
         />
