@@ -1,20 +1,29 @@
 export const settings = {
   en: {
     theme: "Theme",
-    darkModeSwitch: "Dark mode",
-    systemThemeSwitch: "Use system theme",
+    themes: {
+      system: "System",
+      light: "Light",
+      dark: "Dark",
+    },
     language: "Language",
   },
   fr: {
     theme: "Thème",
-    darkModeSwitch: "Mode sombre",
-    systemThemeSwitch: "Utiliser le thème système",
+    themes: {
+      system: "Système",
+      light: "Lumière",
+      dark: "Sombre",
+    },
     language: "Langue",
   },
   es: {
     theme: "Tema",
-    darkModeSwitch: "Modo oscuro",
-    systemThemeSwitch: "Utilizar tema del sistema",
+    themes: {
+      system: "Sistema",
+      light: "Luz",
+      dark: "Oscuro",
+    },
     language: "Idioma",
   },
 };

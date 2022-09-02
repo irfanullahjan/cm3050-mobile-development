@@ -1,35 +1,55 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { useColorScheme } from "react-native";
 
 const ThemeContext = createContext({});
 
 export const useThemeContext = () => useContext(ThemeContext);
 
-export function ThemeContextProvider({ children }) {
-  const [darkMode, setDarkMode] = useState();
+export const themes = ["system", "light", "dark"];
 
-  // load user theme from local storage AsyncStorage
+export function ThemeContextProvider({ children }) {
+  const [theme, setTheme] = useState(null);
+
   useEffect(() => {
-    AsyncStorage.getItem("darkMode")
-      .then((darkMode) => {
-        if (darkMode != null) {
-          setDarkMode(JSON.parse(darkMode));
+    AsyncStorage.getItem("theme")
+      .then((theme) => {
+        if (theme) {
+          setTheme(theme);
+        } else {
+          setTheme("system");
         }
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
       });
   }, []);
+
+  const isSystemDarkMode = useColorScheme() === "dark";
+
+  const darkMode = useMemo(() => {
+    if (theme === "system") {
+      return isSystemDarkMode;
+    } else {
+      return theme === "dark";
+    }
+  }, [theme]);
 
   const value = useMemo(
     () => ({
       darkMode,
-      setDarkMode: (darkMode) => {
-        setDarkMode(darkMode);
-        AsyncStorage.setItem("darkMode", JSON.stringify(darkMode));
+      theme,
+      setTheme: (theme) => {
+        AsyncStorage.setItem("theme", theme)
+          .then(() => {
+            setTheme(theme);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       },
     }),
-    [darkMode]
+    [theme, darkMode]
   );
 
   return (
