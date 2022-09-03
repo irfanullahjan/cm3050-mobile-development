@@ -2,6 +2,7 @@ export const navigation = {
   en: {
     login: "Login",
     signup: "Signup",
+    resetPassword: "Reset password",
     settings: "Settings",
     wallet: "Wallet",
     transaction: "Transaction",
@@ -12,6 +13,7 @@ export const navigation = {
   fr: {
     login: "Connexion",
     signup: "Inscription",
+    resetPassword: "Réinitialiser le mot de passe",
     settings: "Paramètres",
     wallet: "Portefeuille",
     transaction: "Transaction",
@@ -22,6 +24,7 @@ export const navigation = {
   es: {
     login: "Iniciar sesión",
     signup: "Registrarse",
+    resetPassword: "Restablecer la contraseña",
     settings: "Configuración",
     wallet: "Billetera",
     transaction: "Transacción",

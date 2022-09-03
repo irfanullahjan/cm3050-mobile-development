@@ -8,9 +8,9 @@ import { FormContainer } from "../../components/FormContainer";
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { TextInput } from "../../components/TextInput";
 import { auth } from "../../firebase";
-import { alert } from "../../utils/alert";
+import { confirm } from "../../utils/confirm";
 
-export function Login() {
+export function Login({ navigation }) {
   const { t } = useTranslation("auth");
   const formik = useFormik({
     initialValues: {
@@ -20,7 +20,22 @@ export function Login() {
     onSubmit: ({ email, password }) => {
       signInWithEmailAndPassword(auth, email, password).catch((error) => {
         formik.setSubmitting(false);
-        alert(t("alerts.cannotLogin"));
+        confirm(
+          t("loginFailedDialog.title"),
+          t("loginFailedDialog.message"),
+          [
+            {
+              text: t("loginFailedDialog.options.retry"),
+              style: "cancel",
+            },
+            {
+              text: t("loginFailedDialog.options.resetPassword"),
+              style: "destructive",
+              onPress: () => navigation.navigate("ResetPass"),
+            },
+          ],
+          { cancelable: false }
+        );
         console.error(error);
       });
     },

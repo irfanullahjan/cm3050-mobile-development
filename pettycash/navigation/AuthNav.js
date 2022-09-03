@@ -5,6 +5,7 @@ import { Button } from "react-native";
 import { LoadingScreen } from "../components/LoadingScreen";
 import { useAuthContext } from "../contexts/AuthContext";
 import { Login } from "../screens/auth/Login";
+import { ResetPass } from "../screens/auth/ResetPass";
 import { SignUp } from "../screens/auth/Signup";
 
 export function AuthNav() {
@@ -37,6 +38,13 @@ export function AuthNav() {
         component={SignUp}
         options={{
           headerTitle: t("signup"),
+        }}
+      />
+      <Stack.Screen
+        name="ResetPass"
+        component={ResetPass}
+        options={{
+          headerTitle: t("resetPassword"),
         }}
       />
     </Stack.Navigator>
