@@ -28,10 +28,10 @@ export function ThemeSettingsSection() {
             <Image
               source={
                 value === themeTypes.DARK
-                  ? require(`../../../assets/settings/theme-dark.png`)
+                  ? require("../../../assets/settings/theme-dark.png")
                   : value === themeTypes.LIGHT
-                  ? require(`../../../assets/settings/theme-light.png`)
-                  : require(`../../../assets/settings/theme-system.png`)
+                  ? require("../../../assets/settings/theme-light.png")
+                  : require("../../../assets/settings/theme-system.png")
               }
             />
           }
