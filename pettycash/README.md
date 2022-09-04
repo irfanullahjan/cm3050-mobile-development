@@ -25,6 +25,7 @@ Highly ambitious goals:
 - Ability to generate certain reports based on the transactions to help users track their spending.
 
 <div style="page-break-after: always;"></div>
+
 ## Wireframes
 
 The following wireframes show the basic design and functionality of the application. However, the actual implementation is a little bit improved version of this because I learned some new things along the way as I developed the application and therefore felt that certain earlier decisions I made were not quite right.
@@ -73,10 +74,6 @@ The following points outline the feedback I received:
 
 I fixed some of these issues e.g. ability to reset password, delete account, improvement to look and feel etc. However, I didn't have enough time in the end to implement all the suggestions.
 
-Here is a early version of the theme settings screen, which I later improved based on user feedback:
-
-<img src="etc/theme-settings-old.png" width="300">
-
 ## Prototyping
 
 I did some early prototyping for the navigation flow on Expo Snack. I tried out React Router 6 native package however it lacks the basic UI components such as `BottomTabsNavigator` that React Navigation package provides. So I decided to use React Navigation.
@@ -84,6 +81,20 @@ I did some early prototyping for the navigation flow on Expo Snack. I tried out 
 I decided to use Firebase as backend because it requires minimal amount of time to have a basic API ready. I applied security rules to Firestore to allow authenticated users to read and write only their own data. Once the data access rules worked as expected, I was confident enough to rely on Firebase as the backend.
 
 Soon, I had issues with firebase not working on Snack, so I had to switch to offline development on my MacBook. While I initally used TypeScript locally, I decided to switch to JavaScript because I feared I might not be able to deploy the app as Expo Snack. I also decided against using React Native UI libraries other than `react-native-table-view-simple` due to possible issues with Expo Snack.
+
+Some screenshots of the app mid way through the development phase:
+
+<div style="display:flex;">
+  <div>
+    <img src="etc/prototypes/1.png">
+  </div>
+  <div>
+    <img src="etc/prototypes/2.png">
+  </div>
+  <div>
+    <img src="etc/prototypes/3.png">
+  </div>
+</div>
 
 ## Development
 
